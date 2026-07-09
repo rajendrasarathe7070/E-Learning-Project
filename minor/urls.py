@@ -56,6 +56,7 @@ urlpatterns = [
 
     # Main pages – all with proper names
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('home/', TemplateView.as_view(template_name='index.html'), name='home'),
     path('notes/', TemplateView.as_view(template_name='notes.html'), name='notes'),
     path('syllabus/', TemplateView.as_view(template_name='syllabus.html'), name='syllabus'),
     path('books/', TemplateView.as_view(template_name='books.html'), name='books'),

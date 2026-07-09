@@ -13,7 +13,7 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 SITE_ID = 1
 
 # Security: आपका डोमेन सेट करें (ताकि हर जगह https आए)
-DEFAULT_DOMAIN = 'elearn-for-study.onrender.com'
+DEFAULT_DOMAIN = 'gpclearn.onrender.com'
 
 ALLOWED_HOSTS = [
     '*',
@@ -71,40 +71,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'minor.wsgi.application'
 
-# Database Configuration - PostgreSQL
-if os.environ.get('DATABASE_URL'):
-    # Use DATABASE_URL if available (Render will set this)
-    import dj_database_url
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.environ.get('DATABASE_URL'),
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
+import os
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'gpc_db'),      # डिफ़ॉल्ट वैल्यू देना है तो दें
+        'USER': os.environ.get('DB_USER', 'gpc_user'),      # डिफ़ॉल्ट वैल्यू देना है तो दें
+        'PASSWORD': os.environ.get('DB_PASSWORD'),               # ⚠️ बिना डिफ़ॉल्ट के (ENV में डालना अनिवार्य)
+        'HOST': os.environ.get('DB_HOST', 'localhost'),          # लोकल के लिए localhost
+        'PORT': os.environ.get('DB_PORT', '5432'),
+        'CONN_MAX_AGE': 600,
+        'CONN_HEALTH_CHECKS': True,
     }
-else:
-    # Fallback to manually configured PostgreSQL or SQLite for local development
-    if os.environ.get('DB_ENGINE') == 'postgresql':
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.postgresql',
-                'NAME': os.environ.get('DB_NAME', 'elearn_db_m2bf'),
-                'USER': os.environ.get('DB_USER', 'elearn_user'),
-                'PASSWORD': os.environ.get('DB_PASSWORD', '9IVdZF0Xi29EGsvoPjJNkviIKwi8jarf'),
-                'HOST': os.environ.get('DB_HOST', 'dpg-d8dhnuv7f7vs73c8l3ig-a.onrender.com'),
-                'PORT': os.environ.get('DB_PORT', '5432'),
-                'CONN_MAX_AGE': 600,
-                'CONN_HEALTH_CHECKS': True,
-            }
-        }
-    else:
-        # SQLite for local development
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': BASE_DIR / 'db.sqlite3',
-            }
-        }
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
