@@ -1,0 +1,237 @@
+{% load static %}
+{% url 'index' as index_%}
+{% url 'notes' as notes_%}
+{% url 'syllabus' as syllabus_%}
+{% url 'books' as books_%}
+{% url 'pyq' as pyq_%}
+{% url 'doubts' as doubts_%}
+{% url 'profile' as profile_%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>diploma syllabus </title>
+  <meta name="google-site-verification" content="uX9dmJO37GXV90cpuG_sA8rXjIxSiG0dXhVFDojXx2s" />
+  <link id="theme-stylesheet" rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div id="particles" class="particles"></div>
+  <div id="scroll-progress" class="scroll-progress"></div>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="{% url 'index' %}" class="navbar-brand">
+        <div class="brand-icon">📚</div>
+       <span class="brand-name" style="font-size: 20px;">E-learn</span>
+        <span class="brand-name"> <sup style="font-size:10px;">for- GPC Harsud </sup></span>
+      </a>
+      <div class="nav-links">
+        <a href="{% url 'index' %}" class="nav-link">🏠 Home</a>
+        <a href="{% url 'notes' %}" class="nav-link">📝 Notes</a>
+        <a href="{% url 'syllabus' %}" class="nav-link">📗 Syllabus</a>
+        <a href="{% url 'books' %}" class="nav-link">📖 Books</a>
+        <a href="{% url 'pyq' %}" class="nav-link">📄 PYQ</a>
+        <a href="{% url 'doubts' %}" class="nav-link">❓ Doubts</a>
+        <a href="{% url 'profile' %}" class="nav-link">👤 Profile</a>
+      </div>
+       <a href="{% url 'doubts' %}" class="nav-mobile-icon btn btn-ghost btn-sm">❓</a>
+      {% if user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="nav-mobile-icon btn btn-ghost btn-sm">👤</a>
+      {%else %}
+      <a href="{% url 'login' %}" class="nav-mobile-icon btn btn-ghost btn-sm">🔐</a>
+    {% endif %}
+
+      <button id="theme-toggle-btn" class="btn btn-ghost btn-sm" onclick="toggleTheme()" style="font-size:1.2rem; border:none; background:none; cursor:pointer; padding:0.5rem;">☀️</button>
+
+    </div>
+      
+  </nav>
+
+  <nav class="mobile-nav">
+    <a href="{% url 'index' %}">🏠<span>Home</span></a>
+    <a href="{% url 'notes' %}">📝<span>Notes</span></a>
+    <a href="{% url 'syllabus' %}">📗<span>Syllabus</span></a>
+    <a href="{% url 'books' %}">📖<span>Books</span></a>
+    <a href="{% url 'pyq' %}">📄<span>PYQ</span></a>
+    <!-- <a href="{% url 'doubts' %}">❓<span>Doubts</span></a> -->
+    
+  </nav>
+
+  <main class="container page-content page-enter">
+    <div class="page-header">
+      <h1 class="gradient-text">📗 Syllabus Browser</h1>
+      <p>Unit-wise breakdown by branch &amp; semester. View or download PDFs.</p>
+       <div style="margin-top:1.25rem;display:flex;justify-content:flex-end ">
+      {% if user.is_authenticated and user.role == 'super_student' %}
+        <button id="syllabus-admin-toggle" type="button" class="btn btn-primary" onclick="openSyllabusModal()">
+          ➕ Add Syllabus
+        </button>
+      {% endif %}
+    </div>
+    </div>
+      
+    <div class="pill-bar reveal" id="branch-pills"></div>
+
+    <div class="grid-2" id="syllabus-grid"></div>
+  </main>
+
+  <!-- SYLLABUS UPLOAD MODAL -->
+  <div id="syllabus-modal" class="modal-backdrop" style="display:none;" onclick="closeSyllabusModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <h3>📗 Upload Syllabus</h3>
+      <div class="modal-form">
+        <input class="field" id="syll-name" placeholder="Subject Name">
+        <input class="field" id="syll-code" placeholder="Subject Code">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+          <select class="field" id="syll-branch"></select>
+          <select class="field" id="syll-sem"></select>
+        </div>
+        <textarea class="field" id="syll-units" placeholder='Units JSON: [{"n":1,"topic":"Arrays"}]' rows="3"></textarea>
+        <input class="field" id="syll-pdf" placeholder="PDF Link (Google Drive or direct URL)">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeSyllabusModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="submitSyllabusUpload()">🚀 Upload</button>
+      </div>
+    </div>
+  </div>
+  </main>
+
+
+  <div id="toast-wrap" class="toast-wrap"></div>
+
+
+  <script src="{% static 'js/data.js' %}"></script>
+  <script src="{% static 'js/swipe.js' %}"></script>
+  <script src="{% static 'js/csrf.js' %}"></script>
+  <script>
+    // ---------- GLOBAL AUTH STATE ----------
+    window.isAuthenticated = {% if user.is_authenticated %}true {% else %}false{% endif %};
+
+    function closeSyllabusModal(e) {
+        if (!e || e.target === document.getElementById('syllabus-modal'))
+            document.getElementById('syllabus-modal').style.display = 'none';
+    }
+
+    function openSyllabusModal() {
+      if (!window.isAuthenticated) {
+        showToast('🔒 Please login to upload');
+        return;
+      }
+      document.getElementById('syll-branch').innerHTML = branchOptions('CSE', false);
+      let semHtml='';
+      for (let s=1;s<=8;s++) semHtml += `<option value="${s}" ${s===3?'selected':''}>Sem ${s}</option>`;
+      document.getElementById('syll-sem').innerHTML = semHtml;
+      document.getElementById('syllabus-modal').style.display = 'grid';
+    }
+
+    async function submitSyllabusUpload() {
+        const name = document.getElementById('syll-name').value.trim();
+        const code = document.getElementById('syll-code').value.trim();
+        const branch = document.getElementById('syll-branch').value;
+        const sem = document.getElementById('syll-sem').value;
+        const units = document.getElementById('syll-units').value.trim();
+        const pdf = document.getElementById('syll-pdf').value.trim();
+
+        if (!name || !code || !branch || !sem) {
+            showToast('Please fill all required fields');
+            return;
+        }
+
+        const fd = new FormData();
+        fd.append('subject_name', name);
+        fd.append('subject_code', code);
+        fd.append('branch', branch);
+        fd.append('semester', sem);
+        fd.append('units', units || '[]');
+        fd.append('pdf_link', pdf);
+
+        try {
+            const res = await fetch('/api/syllabus/upload/', {
+                method: 'POST',
+                headers: {'X-CSRFToken': getCookie('csrftoken')},
+                body: fd
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                showToast('Error: ' + (data.error || 'Upload failed'));
+                return;
+            }
+            showToast('✅ Syllabus uploaded!');
+            document.getElementById('syllabus-modal').style.display = 'none';
+            document.getElementById('syll-name').value = '';
+            document.getElementById('syll-code').value = '';
+            document.getElementById('syll-units').value = '';
+            document.getElementById('syll-pdf').value = '';
+            renderSyllabus();
+        } catch (err) {
+            showToast('Error: ' + String(err));
+        }
+    }
+
+    let activeBranch = 'CSE';
+
+    function renderBranchPills() {
+      const container = document.getElementById('branch-pills');
+      container.innerHTML = BRANCHES.map(b => `
+        <button class="pill ${b.code === activeBranch ? 'active' : ''}" onclick="setBranch('${b.code}')">
+          ${b.code} <span style="opacity:.7">${window.innerWidth > 768 ? '— '+b.name : ''}</span>
+        </button>
+      `).join('');
+    }
+
+    function setBranch(code) {
+      activeBranch = code;
+      renderBranchPills();
+      renderSyllabus();
+    }
+
+    async function renderSyllabus() {
+        const response = await fetch(`/api/syllabus/?branch=${activeBranch}`);
+        const data = await response.json();
+        const list = data.syllabi;
+        const container = document.getElementById('syllabus-grid');
+        if (list.length === 0) {
+            container.innerHTML = `<div class="card-glass empty">No syllabi yet for ${activeBranch}.</div>`;
+            return;
+        }
+        container.innerHTML = list.map((s, i) => `
+            <article class="card-glass syllabus-card reveal" style="transition-delay:${i*60}ms">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.5rem">
+                    <div>
+                        <h3 style="font-size:1.05rem;font-weight:600">📗 ${escapeHtml(s.subject_name)}</h3>
+                        <p style="font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-top:.2rem">${s.subject_code}</p>
+                    </div>
+                    <div class="flex-wrap-gap" style="flex-shrink:0">
+                        <span class="badge badge-cyan">${s.branch}</span>
+                        <span class="badge badge-violet">Sem ${s.semester}</span>
+                    </div>
+                </div>
+                <p style="font-size:.85rem;color:var(--muted)">${(Array.isArray(s.units) ? s.units : []).length} units</p>
+                <button class="toggle-btn" onclick="toggleUnits('${s.id}', this)">▶ Show units</button>
+                <ul class="units-list" id="units-${s.id}">
+                    ${(Array.isArray(s.units) ? s.units : []).map(u => `<li class="unit-item"><span class="badge badge-matrix" style="flex-shrink:0">U${u.n}</span><span>${escapeHtml(u.topic)}</span></li>`).join('')}
+                </ul>
+                <div style="display:flex;gap:.5rem;margin-top:1rem">
+                    <a href="${s.pdf_url}" target="_blank" class="btn btn-ghost btn-sm">👁️ View Syllabus</a>
+                    <a href="${s.pdf_url}" download class="btn btn-primary btn-sm">⬇ Download PDF</a>
+                </div>
+            </article>
+        `).join('');
+        setTimeout(initReveal, 50);
+    }
+
+    function toggleUnits(id, btn) {
+      const list = document.getElementById('units-'+id);
+      const isOpen = list.classList.contains('open');
+      list.classList.toggle('open');
+      btn.textContent = isOpen ? '▶ Show units' : '▼ Hide units';
+    }
+
+    renderBranchPills();
+    renderSyllabus();
+    initCommon();
+  </script>
+</body>
+</html>

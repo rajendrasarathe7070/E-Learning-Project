@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /profile/
+Disallow: /search/
+Disallow: /notes/?
+Disallow: /notes/[0-9]/
+Disallow: /notes/[0-9][0-9]/
+Allow: /notes/
+Allow: /
+
+Sitemap: https://gpclearn.onrender.com/sitemap.xml

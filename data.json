@@ -1,0 +1,1880 @@
+[
+{
+  "model": "core.branch",
+  "pk": 1,
+  "fields": {
+    "code": "CSE",
+    "name": "CSE"
+  }
+},
+{
+  "model": "core.branch",
+  "pk": 3,
+  "fields": {
+    "code": "ME",
+    "name": "ME"
+  }
+},
+{
+  "model": "core.branch",
+  "pk": 4,
+  "fields": {
+    "code": "CE",
+    "name": "CE"
+  }
+},
+{
+  "model": "core.branch",
+  "pk": 5,
+  "fields": {
+    "code": "EE",
+    "name": "EE"
+  }
+},
+{
+  "model": "core.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$7m62xbInMrR23t2RbGgA8H$VzO0Vyxp/U4HvTje7AY4zDZNTHegCOz5500HGN/oCNM=",
+    "last_login": "2026-05-29T06:36:48.050Z",
+    "is_superuser": true,
+    "username": "rajend_x7",
+    "first_name": "rajendra",
+    "last_name": "sarathe",
+    "email": "rajendrasarathe144@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-05-09T20:38:10Z",
+    "role": "super_student",
+    "branch": 1,
+    "semester": 4,
+    "college": "GPC harsud -450116",
+    "bio": "i am admin of this site .",
+    "avatar": "https://i.pinimg.com/originals/f3/18/86/f31886c0e84df9f4734747fffdf1d7c9.jpg?nii=t",
+    "groups": [],
+    "user_permissions": [
+      1,
+      2,
+      3,
+      4,
+      9,
+      10,
+      11,
+      12,
+      5,
+      6,
+      7,
+      8,
+      13,
+      14,
+      15,
+      16,
+      29,
+      30,
+      31,
+      32,
+      53,
+      54,
+      55,
+      56,
+      21,
+      22,
+      23,
+      24,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      25,
+      26,
+      27,
+      28,
+      17,
+      18,
+      19,
+      20
+    ]
+  }
+},
+{
+  "model": "core.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$JdarR7yxOUIcb4Ywo5c2jK$7vlUnrejj/6E+61NhRUI1g3D4Z/3Jrsd0ZzyKxhfIX0=",
+    "last_login": "2026-05-29T04:49:47.679Z",
+    "is_superuser": false,
+    "username": "admin144",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-11T13:30:23Z",
+    "role": "super_student",
+    "branch": 1,
+    "semester": 4,
+    "college": "GPCH",
+    "bio": "",
+    "avatar": "",
+    "groups": [],
+    "user_permissions": [
+      1,
+      2,
+      3,
+      4,
+      9,
+      10,
+      11,
+      12,
+      5,
+      6,
+      7,
+      8,
+      13,
+      14,
+      15,
+      16,
+      29,
+      30,
+      31,
+      32,
+      53,
+      54,
+      55,
+      56,
+      21,
+      22,
+      23,
+      24,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      25,
+      26,
+      27,
+      28,
+      17,
+      18,
+      19,
+      20
+    ]
+  }
+},
+{
+  "model": "core.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$MQ7JXOMoBHfIcVnR5HZb6I$uCzx4Ra7HXJ1yzhwAvYCS7T2UipE6TGU0DqsAmwF2BI=",
+    "last_login": "2026-05-28T10:03:33.931Z",
+    "is_superuser": false,
+    "username": "amanyadav123",
+    "first_name": "",
+    "last_name": "",
+    "email": "aman144@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-28T09:55:42.599Z",
+    "role": "student",
+    "branch": 1,
+    "semester": 4,
+    "college": "gpc harsud .",
+    "bio": "",
+    "avatar": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$FKmr1EmczhNxXV9sFlKs4W$K+vBapV0hvsmI5VmLp0nDAC6G8JuJ49lItzUG485fPA=",
+    "last_login": "2026-05-28T10:05:08Z",
+    "is_superuser": false,
+    "username": "AAYUSH",
+    "first_name": "",
+    "last_name": "",
+    "email": "aayushyadav7970299240@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-28T10:05:08Z",
+    "role": "super_student",
+    "branch": 1,
+    "semester": 4,
+    "college": "Harsud",
+    "bio": "",
+    "avatar": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.user",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$h0E0g2jwV5zQdswrFQd0q8$OmiqZWH+4ds4VeJ8RTPwJ7V6vcAHwuerbsjrCxokHIM=",
+    "last_login": "2026-05-28T10:34:53Z",
+    "is_superuser": false,
+    "username": "ay@aman.yadav",
+    "first_name": "",
+    "last_name": "",
+    "email": "aman.yadav830597@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-28T10:34:52Z",
+    "role": "super_student",
+    "branch": 1,
+    "semester": 4,
+    "college": "",
+    "bio": "",
+    "avatar": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.user",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$OWbjNnINL5J7tKBNeEkvJc$3ZDBit1OnjLwizGccnwGw/JPMJzwtBnFpLQ5pPQ7TY4=",
+    "last_login": "2026-05-29T04:55:57.422Z",
+    "is_superuser": false,
+    "username": "Aakashsolanki",
+    "first_name": "Aakashsolanki",
+    "last_name": "",
+    "email": "aakashsolankiaakash77@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-29T04:55:56.582Z",
+    "role": "student",
+    "branch": 1,
+    "semester": 4,
+    "college": "Gpc Harsud",
+    "bio": "",
+    "avatar": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.user",
+  "pk": 8,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$rb0aY5GCRNUqqBGkO3MS8T$it9kc02zu6eteeiLJqO5DhI5bfiLuNai9WF/75lUZWA=",
+    "last_login": "2026-05-29T05:02:40.904Z",
+    "is_superuser": false,
+    "username": "Arunbare",
+    "first_name": "",
+    "last_name": "",
+    "email": "arunbare97@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-29T05:02:40.008Z",
+    "role": "student",
+    "branch": 1,
+    "semester": 4,
+    "college": "Gpc harsud",
+    "bio": "",
+    "avatar": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.user",
+  "pk": 9,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$Pj9TL7qC0NO638OiE2dtMi$gZZXcWj4M6Yu49QcJh6Y6+dwgAKrq8bmVy7/pcvcw4s=",
+    "last_login": "2026-05-29T05:05:44Z",
+    "is_superuser": false,
+    "username": "Akash12",
+    "first_name": "",
+    "last_name": "",
+    "email": "aakashbilala435@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-29T05:05:43Z",
+    "role": "super_student",
+    "branch": 1,
+    "semester": 4,
+    "college": "",
+    "bio": "",
+    "avatar": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.user",
+  "pk": 10,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$Vlw3mJW5AQ8BsnJSJZUVqn$lVpVwi0msc12J5suKqwcSOa53d9IKSo1yhy6/IC2EjA=",
+    "last_login": "2026-05-29T06:52:37.906Z",
+    "is_superuser": false,
+    "username": "Totaram",
+    "first_name": "",
+    "last_name": "",
+    "email": "totaram6265@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-29T06:52:36.252Z",
+    "role": "student",
+    "branch": 1,
+    "semester": 4,
+    "college": "Harsud",
+    "bio": "",
+    "avatar": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.user",
+  "pk": 11,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$C2Z1yYuDAMt2JpS7aOlUHn$gZucue/9IuMwkiaXFxKZv7YIj5S18dafGvxbN3ZjqwY=",
+    "last_login": "2026-05-30T09:42:11.441Z",
+    "is_superuser": false,
+    "username": "YASH",
+    "first_name": "",
+    "last_name": "",
+    "email": "YASH8251044@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-30T09:42:10.166Z",
+    "role": "student",
+    "branch": 1,
+    "semester": 4,
+    "college": "gpc harsud .",
+    "bio": "",
+    "avatar": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.note",
+  "pk": 2,
+  "fields": {
+    "title": "computer network",
+    "subject": "computer network",
+    "branch": 1,
+    "semester": 3,
+    "unit": 1,
+    "description": "",
+    "tags": "",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1pFsjOSXHPj5JiIHoVA32i3SPuzJpk9zy/view?usp=drivesdk",
+    "cover_link": "",
+    "uploaded_by": 2,
+    "uploaded_at": "2026-05-10",
+    "download_count": 0
+  }
+},
+{
+  "model": "core.note",
+  "pk": 4,
+  "fields": {
+    "title": "web technoloy",
+    "subject": "WEB TECH .",
+    "branch": 1,
+    "semester": 4,
+    "unit": 1,
+    "description": "introduction to web sites . ",
+    "tags": "",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/16tjfJ4NsvrbXQUu6CUzITJ4Icu9m_-nO/view?usp=drive_link",
+    "cover_link": "",
+    "uploaded_by": 3,
+    "uploaded_at": "2026-05-28",
+    "download_count": 0
+  }
+},
+{
+  "model": "core.note",
+  "pk": 5,
+  "fields": {
+    "title": "Engineering mechanics",
+    "subject": "Engineering mechanics",
+    "branch": 1,
+    "semester": 2,
+    "unit": 1,
+    "description": "Engineering mechanics ",
+    "tags": "#engineering macanics",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1mDb_TJVFB_cYlzQkvSLDy6OWlS0HyG7e/view?usp=drivesdk",
+    "cover_link": "",
+    "uploaded_by": 6,
+    "uploaded_at": "2026-05-28",
+    "download_count": 0
+  }
+},
+{
+  "model": "core.note",
+  "pk": 6,
+  "fields": {
+    "title": "IT System",
+    "subject": "Introduction to it system",
+    "branch": 1,
+    "semester": 2,
+    "unit": 1,
+    "description": "",
+    "tags": ".",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1GqYaTam3-7U_IPS0oJ0mqB8i7UW_vET4/view?usp=drivesdk",
+    "cover_link": "",
+    "uploaded_by": 6,
+    "uploaded_at": "2026-05-28",
+    "download_count": 0
+  }
+},
+{
+  "model": "core.note",
+  "pk": 7,
+  "fields": {
+    "title": "Applied physics",
+    "subject": "Applied physics -1",
+    "branch": 1,
+    "semester": 1,
+    "unit": 1,
+    "description": "",
+    "tags": "",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1rXOY3CuDS5AMsF1Z9cVEI50RisCxNrVy/view?usp=drivesdk",
+    "cover_link": "",
+    "uploaded_by": 6,
+    "uploaded_at": "2026-05-28",
+    "download_count": 0
+  }
+},
+{
+  "model": "core.note",
+  "pk": 8,
+  "fields": {
+    "title": "Chemistry",
+    "subject": "Chemistry",
+    "branch": 1,
+    "semester": 1,
+    "unit": 1,
+    "description": "",
+    "tags": "",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1YrpgURRRRXi5dr6T6aDQC5ZEYP4Knuc8/view?usp=drivesdk",
+    "cover_link": "",
+    "uploaded_by": 6,
+    "uploaded_at": "2026-05-28",
+    "download_count": 0
+  }
+},
+{
+  "model": "core.note",
+  "pk": 9,
+  "fields": {
+    "title": "SW",
+    "subject": "Software engineering",
+    "branch": 1,
+    "semester": 4,
+    "unit": 1,
+    "description": "",
+    "tags": "",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1f8ddXDAT-48Y0YqR6jT-2N43KuNCXL43/view?usp=drivesdk",
+    "cover_link": "",
+    "uploaded_by": 6,
+    "uploaded_at": "2026-05-28",
+    "download_count": 0
+  }
+},
+{
+  "model": "core.note",
+  "pk": 10,
+  "fields": {
+    "title": "FEEE",
+    "subject": "FEEE",
+    "branch": 1,
+    "semester": 2,
+    "unit": 1,
+    "description": "",
+    "tags": "",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1iYXZG7IQIYcm_waGk20V0nKo8s7Xw_Gt/view?usp=drivesdk",
+    "cover_link": "",
+    "uploaded_by": 6,
+    "uploaded_at": "2026-05-28",
+    "download_count": 0
+  }
+},
+{
+  "model": "core.note",
+  "pk": 11,
+  "fields": {
+    "title": "English",
+    "subject": "Communication skills",
+    "branch": 1,
+    "semester": 1,
+    "unit": 1,
+    "description": "",
+    "tags": "",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1ILdzKR7zSJ5quOEDfa91GBvjyWhN66Kp/view?usp=drivesdk",
+    "cover_link": "",
+    "uploaded_by": 6,
+    "uploaded_at": "2026-05-28",
+    "download_count": 0
+  }
+},
+{
+  "model": "core.note",
+  "pk": 12,
+  "fields": {
+    "title": "computer network",
+    "subject": "computer network",
+    "branch": 1,
+    "semester": 4,
+    "unit": 2,
+    "description": "computer network NOTES . ",
+    "tags": "",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1DR9ouE34LB49ODRG-qaXE_1SC8HwLFDd/view?usp=drive_link",
+    "cover_link": "",
+    "uploaded_by": 2,
+    "uploaded_at": "2026-05-28",
+    "download_count": 0
+  }
+},
+{
+  "model": "core.note",
+  "pk": 13,
+  "fields": {
+    "title": "C programming",
+    "subject": "Computer programing",
+    "branch": 1,
+    "semester": 3,
+    "unit": 1,
+    "description": "C programming language notes by rakesh varma.",
+    "tags": "H.",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1NAmLi3ujINHB9S8VNtdhxBeTfoIbX_Td/view?usp=drivesdk",
+    "cover_link": "",
+    "uploaded_by": 2,
+    "uploaded_at": "2026-05-29",
+    "download_count": 0
+  }
+},
+{
+  "model": "core.book",
+  "pk": 2,
+  "fields": {
+    "title": "Python programming",
+    "author": "NULL",
+    "subject": "Python language",
+    "branch": 1,
+    "semester": 3,
+    "rating": 5,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "It's python programming language Book 📚📖.",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1m4aOM_N-hvSqy0uvnCxpynF53aEHawSC/view?usp=drivesdk",
+    "cover_link": "https://i1.wp.com/www.sohamacademy.org/wp-content/uploads/2020/06/python_programming_book_cover.jpg?ssl=1"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 6,
+  "fields": {
+    "title": "Fundamentals of Electrical and Electronics Engineering",
+    "author": "Prof. Susan S. Mathew",
+    "subject": "FEEE",
+    "branch": 1,
+    "semester": 2,
+    "rating": 4,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "Fundamentals of Electrical and Electronics Engineering",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1iYXZG7IQIYcm_waGk20V0nKo8s7Xw_Gt/view?usp=drivesdk",
+    "cover_link": "https://m.media-amazon.com/images/I/A1AjwKH6OGL._SL1500_.jpg"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 7,
+  "fields": {
+    "title": "COMPUTER PROGRAMMING ",
+    "author": "STENDRA ",
+    "subject": "C Programming ",
+    "branch": 1,
+    "semester": 3,
+    "rating": 5,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": " c programing language. ",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/17whtv4FMJxWGG1yuBx_iCNwRJx4EolhS/view?usp=drive_link",
+    "cover_link": "https://m.media-amazon.com/images/I/61Ua3S6CdwL._SL1350_.jpg"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 9,
+  "fields": {
+    "title": "Aplied physics-1",
+    "author": "00",
+    "subject": "physics",
+    "branch": 1,
+    "semester": 1,
+    "rating": 4,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "__",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1Qyz-8uBcU8MXiI-4--bw0UYnWue65LPM/view?usp=sharing",
+    "cover_link": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHRnQmuGouE9jLZbJXAckJbJJZCmn5sKBUdA&s"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 10,
+  "fields": {
+    "title": "Applied chemistry",
+    "author": "00",
+    "subject": "chemestry",
+    "branch": 1,
+    "semester": 1,
+    "rating": 4,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "__",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1I-ZB4AEp0uGEby0nWW6XnhX3SZvGArOa/view?usp=drive_link",
+    "cover_link": "https://khannapublishers.in/image/cache/catalog/UBTE/1-500x500.jpg"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 11,
+  "fields": {
+    "title": "Data structure",
+    "author": "00",
+    "subject": "data structure",
+    "branch": 1,
+    "semester": 3,
+    "rating": 3,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "__",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1ZLWyOw48zLZYu9Y7lxHL1qNQQRxtF-Ae/view?usp=drive_link",
+    "cover_link": "https://www.schandpublishing.com/Handler/ImageHandler.ashx?width=314&height=404&imgpath=~/Upload/BookImage/9789358704730.jpg"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 12,
+  "fields": {
+    "title": "C programming",
+    "author": "00",
+    "subject": "Computer programming",
+    "branch": 1,
+    "semester": 3,
+    "rating": 5,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "__",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/17whtv4FMJxWGG1yuBx_iCNwRJx4EolhS/view?usp=sharing",
+    "cover_link": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWLifM-3ZmokBAKQUmNaH1NZ8KvCy4gc3TOQ&s"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 13,
+  "fields": {
+    "title": "c programming Hindi edition",
+    "author": "00",
+    "subject": "CP",
+    "branch": 1,
+    "semester": 3,
+    "rating": 5,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "__",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1XZWvQ4S_NxCOIHR7Kp-jYN4lfjWRngHT/view?usp=drive_link",
+    "cover_link": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8vH9GtKbKGySR2tixg2gU7nJSpk0BypJfNA&s"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 14,
+  "fields": {
+    "title": "Applied Mathematics  1",
+    "author": "0",
+    "subject": "meths",
+    "branch": 1,
+    "semester": 1,
+    "rating": 5,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "__",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1Rxc8q0JlbxT8STm-xpH2ZbcEx9kPy2zW/view?usp=drive_link",
+    "cover_link": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR50hLEPX22HdCvSfrO6cvu6_s7ppXguPIktA&s"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 15,
+  "fields": {
+    "title": "Communication skills in english",
+    "author": "00",
+    "subject": "communication skills",
+    "branch": 1,
+    "semester": 1,
+    "rating": 5,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "00",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1ILdzKR7zSJ5quOEDfa91GBvjyWhN66Kp/view?usp=drive_link",
+    "cover_link": "https://m.media-amazon.com/images/I/61PnK7t0F7L._AC_UF1000,1000_QL80_.jpg"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 16,
+  "fields": {
+    "title": "engineering graphics",
+    "author": "00",
+    "subject": "engineering graphics",
+    "branch": 1,
+    "semester": 1,
+    "rating": 5,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "00",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1QlsozczDpApl3IhCunhmrto2tARyau2R/view?usp=drive_link",
+    "cover_link": "https://m.media-amazon.com/images/I/91yd+thU9wL._AC_UF1000,1000_QL80_.jpg"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 17,
+  "fields": {
+    "title": "Applied Physics II",
+    "author": "__",
+    "subject": "Applied Physics II",
+    "branch": 1,
+    "semester": 2,
+    "rating": 5,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "__",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1fnbMAcKUzMJRmy_e-xMhc9iZTuNbfSjD/view?usp=drive_link",
+    "cover_link": "https://m.media-amazon.com/images/I/71Ttpj9ftqL._UF1000,1000_QL80_.jpg"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 18,
+  "fields": {
+    "title": "Intro. to it system",
+    "author": "__",
+    "subject": "it-system",
+    "branch": 1,
+    "semester": 2,
+    "rating": 5,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "__",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1yfQnE6lS5Jtug5MtXTba6FlrzjywPawc/view?usp=drive_link",
+    "cover_link": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0R-lW4cnZeYXqGJy_WPMgt1adf1Fwf4sg8w&s"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 19,
+  "fields": {
+    "title": "Engg . Mechanics",
+    "author": "__",
+    "subject": "E.M.",
+    "branch": 1,
+    "semester": 2,
+    "rating": 5,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "__",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1mDb_TJVFB_cYlzQkvSLDy6OWlS0HyG7e/view?usp=drive_link",
+    "cover_link": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH1iQFpdXIkp0U5VJyzrhW23fwmRGTicxkjQ&s"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 20,
+  "fields": {
+    "title": "Fundamentals of Electrical and Electronics Engineering",
+    "author": "00",
+    "subject": "Fundamentals of Electrical and Electronics Engineering",
+    "branch": 1,
+    "semester": 2,
+    "rating": 5,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "hindi edition .",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1iYXZG7IQIYcm_waGk20V0nKo8s7Xw_Gt/view?usp=drive_link",
+    "cover_link": "https://m.media-amazon.com/images/I/6169rpdbRML._UF1000,1000_QL80_.jpg"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 21,
+  "fields": {
+    "title": "Intro. to DBMS",
+    "author": "_",
+    "subject": "data base management system",
+    "branch": 1,
+    "semester": 4,
+    "rating": 5,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "__",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1Gr0tGjmGya4vz1Ut9pFpGAo-ycw8DmBX/view?usp=drive_link",
+    "cover_link": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi9e1nSX-CkD7W0yy87IzEhbz20EUy6AKxBg&s"
+  }
+},
+{
+  "model": "core.book",
+  "pk": 22,
+  "fields": {
+    "title": "Web Technologies",
+    "author": "- Dr Raman Dugyala",
+    "subject": "Web Technologies",
+    "branch": 1,
+    "semester": 4,
+    "rating": 5,
+    "cover_gradient": "linear-gradient(135deg,#6c63ff,#00d4ff)",
+    "description": "Book Name- Web Technologies : Theory and Practical\r\n\r\nAuthor Name- Dr Raman Dugyala\r\n\r\nLanguage-English,\r\nDiploma, 2 year, 4 semester\r\nDownload Count - 4884",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1CkDX8oD6U4l8YykgXVlJE_HCHLNA7TYV/view?usp=drive_link",
+    "cover_link": "https://ekumbh.aicte-india.org/upload/Web%20Technologies%20%20Theory%20and%20Practical_2023-05-24%2000-26-48/theory%20and%20practical.jpg"
+  }
+},
+{
+  "model": "core.pyq",
+  "pk": 1,
+  "fields": {
+    "subject": "Data Structures",
+    "branch": 1,
+    "semester": 3,
+    "year": 2024,
+    "exam_type": "end",
+    "pdf_file": "",
+    "pdf_link": "https://example.com/pyq.pdf"
+  }
+},
+{
+  "model": "core.pyq",
+  "pk": 2,
+  "fields": {
+    "subject": "C Programming",
+    "branch": 1,
+    "semester": 3,
+    "year": 2023,
+    "exam_type": "mid",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1oSnKrS0PdBII_TMKrogyf0XI7XEbHa1s/view?usp=drivesdk"
+  }
+},
+{
+  "model": "core.pyq",
+  "pk": 3,
+  "fields": {
+    "subject": "intro. to DBMS",
+    "branch": 1,
+    "semester": 4,
+    "year": 2024,
+    "exam_type": "mid",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1-TiC6RMHp0KttM03SxYyQOM4Jf2xOl9-/view?usp=sharing"
+  }
+},
+{
+  "model": "core.pyq",
+  "pk": 6,
+  "fields": {
+    "subject": "All subject",
+    "branch": 1,
+    "semester": 4,
+    "year": 2025,
+    "exam_type": "mid",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1IAqAHdOYTDMLEZNeMkHbbJPc8FS7PTwA/view?usp=drivesdk"
+  }
+},
+{
+  "model": "core.pyq",
+  "pk": 7,
+  "fields": {
+    "subject": "communication skill",
+    "branch": 1,
+    "semester": 1,
+    "year": 2025,
+    "exam_type": "back",
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvonline.com/papers/diploma-5161-communication-skill-5161-s-2025.pdf"
+  }
+},
+{
+  "model": "core.pyq",
+  "pk": 8,
+  "fields": {
+    "subject": "computer network",
+    "branch": 1,
+    "semester": 4,
+    "year": 2024,
+    "exam_type": "mid",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1OUpJnR5vGK4J4LjyEEB8G6gm1GxvYOYD/view"
+  }
+},
+{
+  "model": "core.pyq",
+  "pk": 9,
+  "fields": {
+    "subject": "computer network",
+    "branch": 1,
+    "semester": 4,
+    "year": 2022,
+    "exam_type": "back",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1m2g1G2Nwhk6XWtJPYiR1UVmCmFrq3NL6/view"
+  }
+},
+{
+  "model": "core.pyq",
+  "pk": 10,
+  "fields": {
+    "subject": "computer network",
+    "branch": 1,
+    "semester": 4,
+    "year": 2023,
+    "exam_type": "back",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1-JRi3nZjRbU3iLz3yLp-LqeD5W3gMTir/view"
+  }
+},
+{
+  "model": "core.pyq",
+  "pk": 11,
+  "fields": {
+    "subject": "computer network",
+    "branch": 1,
+    "semester": 4,
+    "year": 2022,
+    "exam_type": "mid",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1MBfa2f6o--tJ4iLe9U-wsKU3tHsdB0fV/view"
+  }
+},
+{
+  "model": "core.pyq",
+  "pk": 12,
+  "fields": {
+    "subject": "computer network",
+    "branch": 1,
+    "semester": 4,
+    "year": 2025,
+    "exam_type": "mid",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1qJcQ5qo7LP1gcgj8Iz8wORKqJxQAgVzK/view"
+  }
+},
+{
+  "model": "core.pyq",
+  "pk": 13,
+  "fields": {
+    "subject": "Software Engg.",
+    "branch": 1,
+    "semester": 4,
+    "year": 2024,
+    "exam_type": "mid",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/11WPqofh8Ro_qcYqMM8PeA1cpZ0L3xwMe/view"
+  }
+},
+{
+  "model": "core.pyq",
+  "pk": 14,
+  "fields": {
+    "subject": "Software engg.",
+    "branch": 1,
+    "semester": 4,
+    "year": 2025,
+    "exam_type": "back",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1Ds1vnMMD5zzQ2g-H_mdX5qj_62X5FYeQ/view"
+  }
+},
+{
+  "model": "core.pyq",
+  "pk": 15,
+  "fields": {
+    "subject": "software engg.",
+    "branch": 1,
+    "semester": 4,
+    "year": 2025,
+    "exam_type": "mid",
+    "pdf_file": "",
+    "pdf_link": "https://drive.google.com/file/d/1ZZ1H33XhNIN0QNj1u0CQOSDQSIUf9J4E/view"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 2,
+  "fields": {
+    "subject_name": "4th Semester",
+    "subject_code": "401-402-403-404-405",
+    "branch": 1,
+    "semester": 4,
+    "units": [
+      {
+        "n": 1,
+        "topic": "WEB TECHNOLOGIES"
+      },
+      {
+        "n": 2,
+        "topic": "OPERATING SYSTEMS"
+      },
+      {
+        "n": 3,
+        "topic": "INTRODUCTION TO DBMS"
+      },
+      {
+        "n": 4,
+        "topic": "COMPUTER NETWORKS"
+      },
+      {
+        "n": 5,
+        "topic": "SSAD/SOFTWARE ENGINEERING"
+      },
+      {
+        "n": 6,
+        "topic": "MINOR PROJECT"
+      },
+      {
+        "n": 7,
+        "topic": "ESSENCE OF INDIAN KNOWLEDGE AND TRADITION"
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/IVSEMESTERCSE2025.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 7,
+  "fields": {
+    "subject_name": "1 st semester civil Eng.",
+    "subject_code": "101-105",
+    "branch": 4,
+    "semester": 1,
+    "units": [
+      {
+        "n": 1,
+        "topic": ""
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/ISEMGROUPB20252026.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 8,
+  "fields": {
+    "subject_name": "1st Semester ",
+    "subject_code": "101-105",
+    "branch": 1,
+    "semester": 1,
+    "units": [
+      {
+        "n": 1,
+        "topic": "Unit 1: Units and Measurements"
+      },
+      {
+        "n": 2,
+        "topic": "Unit 2: Force and Motion"
+      },
+      {
+        "n": 3,
+        "topic": "Unit 3: Work, Energy, Power and Rotational Motion"
+      },
+      {
+        "n": 4,
+        "topic": "Unit 4: Properties of Matter"
+      },
+      {
+        "n": 5,
+        "topic": "Unit 5: Heat and Thermometry"
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/ISEMGROUPA20252026.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 9,
+  "fields": {
+    "subject_name": "2st Semester",
+    "subject_code": "--",
+    "branch": 1,
+    "semester": 2,
+    "units": [
+      {
+        "n": 1,
+        "topic": "MATHEMATICS - II"
+      },
+      {
+        "n": 2,
+        "topic": "APPLIED PHYSICS - II"
+      },
+      {
+        "n": 3,
+        "topic": "INTRODUCTION TO IT SYSTEMS"
+      },
+      {
+        "n": 4,
+        "topic": "FUNDAMENTALS OF ELECTRICAL AND ELECTRONICS ENGINEERING"
+      },
+      {
+        "n": 5,
+        "topic": "ENGINEERING MECHANICS"
+      },
+      {
+        "n": 6,
+        "topic": "ENVIRONMENTAL SCIENCE"
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/IISEMESTERCSE2025.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 11,
+  "fields": {
+    "subject_name": "3rd semester",
+    "subject_code": "__",
+    "branch": 1,
+    "semester": 3,
+    "units": [
+      {
+        "n": 1,
+        "topic": "COMPUTER PROGRAMMING"
+      },
+      {
+        "n": 2,
+        "topic": "SCRIPTING LANGUAGES"
+      },
+      {
+        "n": 3,
+        "topic": "DATA STRUCTURES"
+      },
+      {
+        "n": 4,
+        "topic": "COMPUTER SYSTEM ORGANISATION"
+      },
+      {
+        "n": 5,
+        "topic": "ALGORITHMS"
+      },
+      {
+        "n": 6,
+        "topic": "SUMMER INTERNSHIP- I"
+      },
+      {
+        "n": 7,
+        "topic": "PROFESSIONAL DEVELOPMENT"
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/IIISEMCSE20252026_New.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 12,
+  "fields": {
+    "subject_name": "5th Semester",
+    "subject_code": "__",
+    "branch": 1,
+    "semester": 5,
+    "units": [
+      {
+        "n": 1,
+        "topic": "INTRODUCTION TO e-GOVERNANCE"
+      },
+      {
+        "n": 2,
+        "topic": "INTERNET OF THINGS"
+      },
+      {
+        "n": 3,
+        "topic": "INFORMATION SECURITY OR MULTIMEDIA TECHNOLOGIES"
+      },
+      {
+        "n": 4,
+        "topic": "ADVANCE COMPUTER NETWORKS OR DATA SCIENCES: DATA WAREHOUSING AND DATA MINING"
+      },
+      {
+        "n": 5,
+        "topic": "RENEWABLE ENERGY TECHNOLOGIES OR OPERATION RESEARCH"
+      },
+      {
+        "n": 6,
+        "topic": "SUMMER INTERNSHIP-II"
+      },
+      {
+        "n": 7,
+        "topic": "MAJOR PROJECT"
+      },
+      {
+        "n": 8,
+        "topic": "WORKSHOP/VISITS etc."
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/VSEMCSE20252026_New.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 13,
+  "fields": {
+    "subject_name": "6th Semester",
+    "subject_code": "_",
+    "branch": 1,
+    "semester": 6,
+    "units": [
+      {
+        "n": 1,
+        "topic": "MOBILE COMPUTING OR FREE AND OPEN SOURCE SOFTWARE (FOSS)"
+      },
+      {
+        "n": 2,
+        "topic": "NETWORK FORENSICS OR SOFTWARE TESTING"
+      },
+      {
+        "n": 3,
+        "topic": "DISASTER MANAGEMENT OR PROJECT MANAGEMENT"
+      },
+      {
+        "n": 4,
+        "topic": "ENTREPRENEURSHIP AND START-UPS"
+      },
+      {
+        "n": 5,
+        "topic": "ARTIFICIAL INTELLIGENCE OR ENGINEERING ECONOMICS AND ACCOUNTANCY"
+      },
+      {
+        "n": 6,
+        "topic": "INDIAN CONSTITUTION"
+      },
+      {
+        "n": 7,
+        "topic": "MAJOR PROJECT"
+      },
+      {
+        "n": 8,
+        "topic": "SEMINAR"
+      },
+      {
+        "n": 9,
+        "topic": "LIBERARY/VISITS etc."
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/VISEMESTERCSE2025.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 14,
+  "fields": {
+    "subject_name": "1st semester",
+    "subject_code": "__",
+    "branch": 4,
+    "semester": 1,
+    "units": [
+      {
+        "n": 1,
+        "topic": "MATHEMATICS-I"
+      },
+      {
+        "n": 2,
+        "topic": "APPLIED PHYSICS-I"
+      },
+      {
+        "n": 3,
+        "topic": "INTRODUCTION TO IT SYSTEMS"
+      },
+      {
+        "n": 4,
+        "topic": "FUNDAMENTALS OF ELECTRICAL & ELECTRONICS ENGINEERING"
+      },
+      {
+        "n": 5,
+        "topic": "ENGINEERING MECHANICS"
+      },
+      {
+        "n": 6,
+        "topic": "ENVIRONMENTAL SCIENCE"
+      },
+      {
+        "n": 7,
+        "topic": "SPORTS AND YOGA"
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/ISEMGROUPB20252026.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 15,
+  "fields": {
+    "subject_name": "2nd semester",
+    "subject_code": "__",
+    "branch": 4,
+    "semester": 2,
+    "units": [
+      {
+        "n": 1,
+        "topic": "MATHEMATICS - II"
+      },
+      {
+        "n": 2,
+        "topic": "APPLIED PHYSICS - II"
+      },
+      {
+        "n": 3,
+        "topic": "APPLIED CHEMISTRY"
+      },
+      {
+        "n": 4,
+        "topic": "COMMUNICATION SKILLS IN ENGLISH"
+      },
+      {
+        "n": 5,
+        "topic": "ENGINEERING GRAPHICS"
+      },
+      {
+        "n": 6,
+        "topic": "ENGINEERING WORKSHOP PRACTICE"
+      },
+      {
+        "n": 7,
+        "topic": "LIBERARY"
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/IISEMESTERCIVIL2025.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 16,
+  "fields": {
+    "subject_name": "3rd semester",
+    "subject_code": "__",
+    "branch": 4,
+    "semester": 3,
+    "units": [
+      {
+        "n": 1,
+        "topic": "CONSTRUCTION MATERIALS"
+      },
+      {
+        "n": 2,
+        "topic": "BASIC SURVEYING"
+      },
+      {
+        "n": 3,
+        "topic": "MECHANICS OF MATERIALS"
+      },
+      {
+        "n": 4,
+        "topic": "BUILDING CONSTRUCTION"
+      },
+      {
+        "n": 5,
+        "topic": "CONCRETE TECHNOLOGY"
+      },
+      {
+        "n": 6,
+        "topic": "GEOTECHNICAL ENGINEERING"
+      },
+      {
+        "n": 7,
+        "topic": "SUMMER INTERNSHIP- I"
+      },
+      {
+        "n": 8,
+        "topic": "PROFESSIONAL DEVELOPMENT"
+      },
+      {
+        "n": 9,
+        "topic": "RECOVERY CLASSES/LIBERARY etc."
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/IIISEMESTERCIVIL2025.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 17,
+  "fields": {
+    "subject_name": "4th semester",
+    "subject_code": "__",
+    "branch": 4,
+    "semester": 4,
+    "units": [
+      {
+        "n": 1,
+        "topic": "HYDRAULICS"
+      },
+      {
+        "n": 2,
+        "topic": "ADVANCED SURVEYING"
+      },
+      {
+        "n": 3,
+        "topic": "THEORY OF STRUCTURES"
+      },
+      {
+        "n": 4,
+        "topic": "BUILDING PLANNING AND DRAWING"
+      },
+      {
+        "n": 5,
+        "topic": "TRANSPORTATION ENGINEERING"
+      },
+      {
+        "n": 6,
+        "topic": "CONSTRUCTION MANAGEMENT"
+      },
+      {
+        "n": 7,
+        "topic": "PRECAST AND PRESTRESSED CONCRETE"
+      },
+      {
+        "n": 8,
+        "topic": "MINOR PROJECT"
+      },
+      {
+        "n": 9,
+        "topic": "ESSENCE OF INDIAN KNOWLEDGE AND TRADITION"
+      },
+      {
+        "n": 10,
+        "topic": "LIBERARY /SEMINAR/VISITS etc."
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/IVSEMESTERCIVIL2025.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 18,
+  "fields": {
+    "subject_name": "1st semester",
+    "subject_code": "__",
+    "branch": 3,
+    "semester": 1,
+    "units": [
+      {
+        "n": 1,
+        "topic": "MATHEMATICS-I"
+      },
+      {
+        "n": 2,
+        "topic": "APPLIED PHYSICS-I"
+      },
+      {
+        "n": 3,
+        "topic": "INTRODUCTION TO IT SYSTEMS"
+      },
+      {
+        "n": 4,
+        "topic": "FUNDAMENTALS OF ELECTRICAL & ELECTRONICS ENGINEERING"
+      },
+      {
+        "n": 5,
+        "topic": "ENGINEERING MECHANICS"
+      },
+      {
+        "n": 6,
+        "topic": "ENVIRONMENTAL SCIENCE"
+      },
+      {
+        "n": 7,
+        "topic": "SPORTS AND YOGA"
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/ISEMGROUPA20252026.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 19,
+  "fields": {
+    "subject_name": "1st sem",
+    "subject_code": "_",
+    "branch": 5,
+    "semester": 1,
+    "units": [
+      {
+        "n": 1,
+        "topic": "MATHEMATICS-I"
+      },
+      {
+        "n": 2,
+        "topic": "APPLIED PHYSICS-I"
+      },
+      {
+        "n": 3,
+        "topic": "INTRODUCTION TO IT SYSTEMS"
+      },
+      {
+        "n": 4,
+        "topic": "FUNDAMENTALS OF ELECTRICAL & ELECTRONICS ENGINEERING"
+      },
+      {
+        "n": 5,
+        "topic": "ENGINEERING MECHANICS"
+      },
+      {
+        "n": 6,
+        "topic": "ENVIRONMENTAL SCIENCE"
+      },
+      {
+        "n": 7,
+        "topic": "SPORTS AND YOGA"
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/ISEMGROUPA20252026.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 20,
+  "fields": {
+    "subject_name": "2nd semester",
+    "subject_code": "_",
+    "branch": 1,
+    "semester": 2,
+    "units": [
+      {
+        "n": 1,
+        "topic": "MATHEMATICS - II"
+      },
+      {
+        "n": 2,
+        "topic": "APPLIED PHYSICS - II"
+      },
+      {
+        "n": 3,
+        "topic": "APPLIED CHEMISTRY"
+      },
+      {
+        "n": 4,
+        "topic": "COMMUNICATION SKILLS IN ENGLISH"
+      },
+      {
+        "n": 5,
+        "topic": "ENGINEERING GRAPHICS"
+      },
+      {
+        "n": 6,
+        "topic": "ENGINEERING WORKSHOP PRACTICE"
+      },
+      {
+        "n": 7,
+        "topic": "LIBERARY"
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/IISEMESTERMECHANICAL2025.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 21,
+  "fields": {
+    "subject_name": "2nd semester",
+    "subject_code": "_",
+    "branch": 3,
+    "semester": 2,
+    "units": [
+      {
+        "n": 1,
+        "topic": "MATHEMATICS - II"
+      },
+      {
+        "n": 2,
+        "topic": "APPLIED PHYSICS - II"
+      },
+      {
+        "n": 3,
+        "topic": "APPLIED CHEMISTRY"
+      },
+      {
+        "n": 4,
+        "topic": "COMMUNICATION SKILLS IN ENGLISH"
+      },
+      {
+        "n": 5,
+        "topic": "ENGINEERING GRAPHICS"
+      },
+      {
+        "n": 6,
+        "topic": "ENGINEERING WORKSHOP PRACTICE"
+      },
+      {
+        "n": 7,
+        "topic": "LIBERARY"
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/IISEMESTERMECHANICAL2025.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 22,
+  "fields": {
+    "subject_name": "2nd semester",
+    "subject_code": "-",
+    "branch": 4,
+    "semester": 2,
+    "units": [
+      {
+        "n": 1,
+        "topic": "MATHEMATICS - II"
+      },
+      {
+        "n": 2,
+        "topic": "APPLIED PHYSICS - II"
+      },
+      {
+        "n": 3,
+        "topic": "APPLIED CHEMISTRY"
+      },
+      {
+        "n": 4,
+        "topic": "COMMUNICATION SKILLS IN ENGLISH"
+      },
+      {
+        "n": 5,
+        "topic": "ENGINEERING GRAPHICS"
+      },
+      {
+        "n": 6,
+        "topic": "ENGINEERING WORKSHOP PRACTICE"
+      },
+      {
+        "n": 7,
+        "topic": "LIBERARY"
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/IISEMESTERMECHANICAL2025.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 23,
+  "fields": {
+    "subject_name": "2nd sem",
+    "subject_code": "-",
+    "branch": 5,
+    "semester": 2,
+    "units": [
+      {
+        "n": 1,
+        "topic": "MATHEMATICS - II"
+      },
+      {
+        "n": 2,
+        "topic": "APPLIED PHYSICS - II"
+      },
+      {
+        "n": 3,
+        "topic": "APPLIED CHEMISTRY"
+      },
+      {
+        "n": 4,
+        "topic": "COMMUNICATION SKILLS IN ENGLISH"
+      },
+      {
+        "n": 5,
+        "topic": "ENGINEERING GRAPHICS"
+      },
+      {
+        "n": 6,
+        "topic": "ENGINEERING WORKSHOP PRACTICE"
+      },
+      {
+        "n": 7,
+        "topic": "LIBERARY"
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/IISEMESTERMECHANICAL2025.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 24,
+  "fields": {
+    "subject_name": "3rd semester",
+    "subject_code": "-",
+    "branch": 3,
+    "semester": 3,
+    "units": [
+      {
+        "n": 1,
+        "topic": "BASIC MECHANICAL ENGINEERING"
+      },
+      {
+        "n": 2,
+        "topic": "THERMAL ENGINEERING - I"
+      },
+      {
+        "n": 3,
+        "topic": "FLUID MECHANICS AND HYDRAULIC MACHINERY"
+      },
+      {
+        "n": 4,
+        "topic": "MANUFACTURING PROCESS"
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/IIISEMESTERMECHANICAL2025.pdf"
+  }
+},
+{
+  "model": "core.syllabus",
+  "pk": 25,
+  "fields": {
+    "subject_name": "4th semester",
+    "subject_code": "-",
+    "branch": 3,
+    "semester": 4,
+    "units": [
+      {
+        "n": 1,
+        "topic": "STRENGTH OF MATERIALS"
+      },
+      {
+        "n": 2,
+        "topic": "THERMAL ENGINEERING - II"
+      },
+      {
+        "n": 3,
+        "topic": "MEASUREMENTS AND METROLOGY"
+      },
+      {
+        "n": 4,
+        "topic": "REFRIGERATION AND AIRCONDITIONING OR MATERIAL HANDLING SYSTEM"
+      },
+      {
+        "n": 5,
+        "topic": "COMPUTER INTEGRATED MANUFACTURING OR HEAT TRANSFER"
+      },
+      {
+        "n": 6,
+        "topic": "MINOR PROJECT"
+      },
+      {
+        "n": 7,
+        "topic": "ESSENCE OF INDIAN KNOWLEDGE AND TRADITION"
+      },
+      {
+        "n": 8,
+        "topic": "LIBERARY /SEMINAR/VISITS etc."
+      }
+    ],
+    "pdf_file": "",
+    "pdf_link": "https://www.rgpvdiploma.in/SchemePDF/Syallabus/IVSEMESTERMECHANICAL2025.pdf"
+  }
+},
+{
+  "model": "core.doubt",
+  "pk": 5,
+  "fields": {
+    "title": "Demo for asking lows of physics ?",
+    "description": "what is 3rd law of newton ?",
+    "subject": "physics",
+    "branch": 1,
+    "semester": 1,
+    "asked_by": 2,
+    "asked_at": "2026-05-24T02:54:35.738Z",
+    "is_solved": false,
+    "views": 0
+  }
+},
+{
+  "model": "core.doubt",
+  "pk": 6,
+  "fields": {
+    "title": "tell me any 2 input device name ?",
+    "description": "answer -",
+    "subject": "it-system",
+    "branch": 1,
+    "semester": 4,
+    "asked_by": 3,
+    "asked_at": "2026-05-29T04:50:07.843Z",
+    "is_solved": false,
+    "views": 0
+  }
+},
+{
+  "model": "core.bookmark",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "note": 2,
+    "saved_at": "2026-05-09T20:55:18.553Z"
+  }
+}
+]

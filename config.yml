@@ -1,0 +1,8 @@
+# config.yml
+tunnel: <your-tunnel-id>   # optional, agar already tunnel hai
+credentials-file: /path/to/credentials.json   # optional
+
+ingress:
+  - hostname: "*.trycloudflare.com"
+    service: http://localhost:8000
+  - service: http_status:404

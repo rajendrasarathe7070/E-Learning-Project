@@ -1,0 +1,19 @@
+services:
+
+  - type: web
+    name: eLearn-for-study
+    env: python
+    plan: free
+    buildCommand: bash build.sh
+    startCommand: gunicorn minor.wsgi:application --log-file -
+    envVars:
+      - key: DEBUG
+        value: 'False'
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: '.onrender.com'
+      - key: PYTHONUNBUFFERED
+        value: '1'
+      # Python runtime enforce karne ke liye runtime.txt ko source of truth rakha hai.
+

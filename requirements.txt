@@ -1,0 +1,73 @@
+
+# Django Framework
+Django==6.0.3
+
+# PostgreSQL Database Driver
+psycopg2-binary==2.9.9
+dj-database-url==2.1.0
+
+# Python Imaging Library (for image handling)
+# Render build me consistent wheel/install ke liye version pin karna zaroori
+Pillow==12.2.0
+
+
+# Environment variables management
+python-dotenv
+
+# WSGI HTTP Server
+gunicorn
+
+# Static Files Serving in Production
+whitenoise
+
+# REST API Framework (if needed)
+djangorestframework
+
+# CORS Headers (if API requests from frontend)
+django-cors-headers
+
+# Admin customization
+django-admin-interface
+
+# Form handling & validation
+django-crispy-forms
+
+# Pagination & filtering
+django-filter
+
+# API Documentation
+drf-spectacular
+
+# Security
+django-environ
+
+# Testing
+pytest
+pytest-django
+
+# Code quality
+black
+flake8
+isort
+
+# Debugging
+django-debug-toolbar
+
+# Task Queue (optional - for background tasks)
+celery
+
+# Email Backend
+django-anymail
+
+# Caching
+django-redis
+redis
+
+# API Rate Limiting
+djangorestframework-simplejwt
+
+# File Upload
+django-storages
+
+# Logging
+python-json-logger
