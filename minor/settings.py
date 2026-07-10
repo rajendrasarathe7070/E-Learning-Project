@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME', 'gpc_db'),      # डिफ़ॉल्ट वैल्यू देना है तो दें
         'USER': os.environ.get('DB_USER', 'gpc_user'),      # डिफ़ॉल्ट वैल्यू देना है तो दें
         'PASSWORD': os.environ.get('DB_PASSWORD'),               # ⚠️ बिना डिफ़ॉल्ट के (ENV में डालना अनिवार्य)
-        'HOST': os.environ.get('DB_HOST', 'localhost'),          # लोकल के लिए localhost
+        'HOST': os.environ.get('DB_HOST', 'db.khpacdsusjofcdvzzhzs.supabase.co'),          # लोकल के लिए localhost
         'PORT': os.environ.get('DB_PORT', '5432'),
         'CONN_MAX_AGE': 600,
         'CONN_HEALTH_CHECKS': True,
