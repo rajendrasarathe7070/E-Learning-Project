@@ -3,9 +3,9 @@
 Django==6.0.3
 
 # PostgreSQL Database Driver
-psycopg2-binary==2.9.9
-dj-database-url==2.1.0
 
+dj-database-url==2.1.0
+psycopg2-binary==2.9.12
 # Python Imaging Library (for image handling)
 # Render build me consistent wheel/install ke liye version pin karna zaroori
 Pillow==12.2.0
