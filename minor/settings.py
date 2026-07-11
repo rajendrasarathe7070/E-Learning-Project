@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'minor.wsgi.application'
 def get_database_config():
     database_url = os.environ.get('DATABASE_URL')
     if database_url:
-        config = dj_database_url.parse(database_url)
+        config = dj_database_url.parse(database_url,ssl_require=True)
         config.update({
             'CONN_MAX_AGE': 600,
             'CONN_HEALTH_CHECKS': True,

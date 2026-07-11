@@ -78,8 +78,8 @@ urlpatterns = [
     path('doubts.html', TemplateView.as_view(template_name='doubts.html')),
     path('profile.html', TemplateView.as_view(template_name='profile.html')),
 
-    # API endpoints (must be defined in api/urls.py)
-    path('api/', include('api.urls')),
+    # # API endpoints (must be defined in api/urls.py)
+    # path('api/', include('api.urls')),
 ]
 
 # Serve media/static files.
