@@ -7,7 +7,7 @@ pip install -r requirements.txt
 
 
 echo "Collecting static files..."
-python src/manage.py collectstatic --no-input
+python manage.py collectstatic --no-input
 
 # 3. डेटाबेस माइग्रेशन चलाएं (ताकि core_note टेबल वाली एरर ठीक हो सके)
 echo "Running database migrations..."
