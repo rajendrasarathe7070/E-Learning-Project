@@ -11,6 +11,6 @@ python manage.py collectstatic --no-input
 
 # 3. डेटाबेस माइग्रेशन चलाएं (ताकि core_note टेबल वाली एरर ठीक हो सके)
 echo "Running database migrations..."
-python src/manage.py migrate
+python manage.py migrate
 
 echo "Build process completed successfully!"
