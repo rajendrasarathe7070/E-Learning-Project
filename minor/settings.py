@@ -83,6 +83,7 @@ def get_database_config():
         })
         return config
 
+<<<<<<< HEAD
     db_name = os.environ.get('DB_NAME')
     db_user = os.environ.get('DB_USER')
     db_password = os.environ.get('DB_PASSWORD')
@@ -104,6 +105,16 @@ def get_database_config():
     return {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': str(BASE_DIR / 'db.sqlite3'),
+=======
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'gpc_db'),      # डिफ़ॉल्ट वैल्यू देना है तो दें
+        'USER': os.environ.get('DB_USER', 'gpc_user'),      # डिफ़ॉल्ट वैल्यू देना है तो दें
+        'PASSWORD': os.environ.get('DB_PASSWORD'),               # ⚠️ बिना डिफ़ॉल्ट के (ENV में डालना अनिवार्य)
+        'HOST': os.environ.get('DB_HOST', 'db.khpacdsusjofcdvzzhzs.supabase.co'),          # लोकल के लिए localhost
+        'PORT': os.environ.get('DB_PORT', '5432'),
+>>>>>>> eef1529a1846656657d1964717b33a4789fe0003
         'CONN_MAX_AGE': 600,
         'CONN_HEALTH_CHECKS': True,
     }
