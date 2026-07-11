@@ -20,6 +20,8 @@ class CustomUserAdmin(UserAdmin):
         ('Extra Fields', {'fields': ('branch', 'semester', 'college', 'role')}),
     )
 
+
+
 admin.site.register(User, CustomUserAdmin)
 
 admin.site.register(Branch)

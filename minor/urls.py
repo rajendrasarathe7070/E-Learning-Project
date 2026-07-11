@@ -29,13 +29,18 @@ from django.urls import path, include
 from django.contrib.sitemaps.views import sitemap
 from .sitemaps import StaticSitemap, DynamicFilterSitemap, DetailSitemap
 from core import views
+from minor.sitemaps import PYQSitemap 
 
 # ✅ यह Dictionary (Variable) सबसे पहले Define होना चाहिए
 sitemaps = {
     'static': StaticSitemap,
     'dynamic_filters': DynamicFilterSitemap,
     'details': DetailSitemap,
+    'pyqs': PYQSitemap,
 }
+
+
+
 
 
 urlpatterns = [
@@ -81,6 +86,9 @@ urlpatterns = [
     # # API endpoints (must be defined in api/urls.py)
     # path('api/', include('api.urls')),
     path('notes/<slug:slug>/', views.note_detail, name='note_detail'),
+        # PYQ Detail Page के लिए यह पाथ जोड़ें
+    path('pyq/<slug:slug>/', views.pyq_detail, name='pyq_detail'),
+
 ]
 
 # Serve media/static files.

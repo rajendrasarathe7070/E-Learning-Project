@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
+from django.urls import reverse 
 
 class Branch(models.Model):
     code = models.CharField(max_length=10, unique=True)
@@ -67,8 +68,11 @@ class Book(models.Model):
     pdf_link = models.URLField(blank=True)
     cover_link = models.URLField(blank=True)
 
+ # स्लग बनाने के लिए ज़रूरी है
+
 class PYQ(models.Model):
     EXAM_TYPES = [('mid', 'Mid-Sem'), ('end', 'End-Sem'), ('back', 'Backlog')]
+    
     subject = models.CharField(max_length=100)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, db_index=True)
     semester = models.PositiveSmallIntegerField(db_index=True)
@@ -76,6 +80,36 @@ class PYQ(models.Model):
     exam_type = models.CharField(max_length=10, choices=EXAM_TYPES)
     pdf_file = models.FileField(upload_to='pyqs/', null=True, blank=True)
     pdf_link = models.URLField(blank=True)
+    
+    # 1. max_length को बढ़ाकर 250 कर दिया है
+    slug = models.SlugField(max_length=250, unique=True, blank=True, null=True)
+
+    def __str__(self):
+        # self.subject_name को बदलकर self.subject किया गया है
+        return f"{self.subject} ({self.year})"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            # यहाँ भी self.subject का उपयोग किया गया है
+            title_string = f"{self.subject} {self.exam_type} {self.year}"
+            original_slug = slugify(title_string)
+            
+            # डुप्लिकेट स्लग से बचने का लॉजिक
+            queryset = PYQ.objects.all().filter(slug__iexact=original_slug).count()
+            count = 1
+            slug = original_slug
+            while(queryset):
+                slug = f"{original_slug}-{count}"
+                count += 1
+                queryset = PYQ.objects.all().filter(slug__iexact=slug).count()
+            
+            self.slug = slug
+            
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('pyq_detail', kwargs={'slug': self.slug})
+
 
 class Syllabus(models.Model):
     subject_name = models.CharField(max_length=100)

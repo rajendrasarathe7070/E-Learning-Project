@@ -4,6 +4,7 @@ from core.models import Note, PYQ  # यहाँ 'minor' का इस्ते
 
 
 
+
 class StaticSitemap(Sitemap):
     priority = 0.8
     changefreq = 'weekly'
@@ -31,3 +32,11 @@ class DetailSitemap(Sitemap):
     def location(self, item):
         # 'item.id' ki jagah 'item.slug' use karein
         return f"/notes/{item.slug}/"
+
+class PYQSitemap(Sitemap):
+    changefreq = "weekly"  # गूगल इस पेज को हर हफ्ते चेक करेगा
+    priority = 0.7         # सर्च इंजन के लिए इस पेज की इम्पोर्टेंस (0.0 से 1.0)
+
+    def items(self):
+        # यह केवल उन्हीं PYQs को साइटमैप में लाएगा जिनका स्लग खाली नहीं है
+        return PYQ.objects.filter(slug__isnull=False).exclude(slug='')
