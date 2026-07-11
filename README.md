@@ -135,6 +135,259 @@ minor/
 
 ## 🗄️ Database Models
 
+## Table `django_migrations`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int8` | Primary Identity |
+| `app` | `varchar` |  |
+| `name` | `varchar` |  |
+| `applied` | `timestamptz` |  |
+
+## Table `django_content_type`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int4` | Primary Identity |
+| `app_label` | `varchar` |  |
+| `model` | `varchar` |  |
+
+## Table `auth_permission`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int4` | Primary Identity |
+| `name` | `varchar` |  |
+| `content_type_id` | `int4` |  |
+| `codename` | `varchar` |  |
+
+## Table `auth_group`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int4` | Primary Identity |
+| `name` | `varchar` |  Unique |
+
+## Table `auth_group_permissions`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int8` | Primary Identity |
+| `group_id` | `int4` |  |
+| `permission_id` | `int4` |  |
+
+## Table `core_branch`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int8` | Primary Identity |
+| `code` | `varchar` |  Unique |
+| `name` | `varchar` |  |
+
+## Table `core_user`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int8` | Primary Identity |
+| `password` | `varchar` |  |
+| `last_login` | `timestamptz` |  Nullable |
+| `is_superuser` | `bool` |  |
+| `username` | `varchar` |  Unique |
+| `first_name` | `varchar` |  |
+| `last_name` | `varchar` |  |
+| `email` | `varchar` |  |
+| `is_staff` | `bool` |  |
+| `is_active` | `bool` |  |
+| `date_joined` | `timestamptz` |  |
+| `role` | `varchar` |  |
+| `semester` | `int2` |  Nullable |
+| `college` | `varchar` |  |
+| `bio` | `text` |  |
+| `avatar` | `varchar` |  |
+| `branch_id` | `int8` |  Nullable |
+
+## Table `core_user_groups`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int8` | Primary Identity |
+| `user_id` | `int8` |  |
+| `group_id` | `int4` |  |
+
+## Table `core_user_user_permissions`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int8` | Primary Identity |
+| `user_id` | `int8` |  |
+| `permission_id` | `int4` |  |
+
+## Table `core_book`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int8` | Primary Identity |
+| `title` | `varchar` |  |
+| `author` | `varchar` |  |
+| `subject` | `varchar` |  |
+| `semester` | `int2` |  |
+| `rating` | `int2` |  |
+| `cover_gradient` | `varchar` |  |
+| `description` | `text` |  |
+| `pdf_file` | `varchar` |  Nullable |
+| `pdf_link` | `varchar` |  |
+| `cover_link` | `varchar` |  |
+| `branch_id` | `int8` |  |
+
+## Table `core_doubt`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int8` | Primary Identity |
+| `title` | `varchar` |  |
+| `description` | `text` |  |
+| `subject` | `varchar` |  |
+| `semester` | `int2` |  |
+| `asked_at` | `timestamptz` |  |
+| `is_solved` | `bool` |  |
+| `views` | `int4` |  |
+| `asked_by_id` | `int8` |  |
+| `branch_id` | `int8` |  |
+
+## Table `core_note`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int8` | Primary Identity |
+| `title` | `varchar` |  |
+| `subject` | `varchar` |  |
+| `semester` | `int2` |  |
+| `unit` | `int2` |  |
+| `description` | `text` |  |
+| `tags` | `varchar` |  |
+| `pdf_file` | `varchar` |  Nullable |
+| `pdf_link` | `varchar` |  |
+| `cover_link` | `varchar` |  |
+| `uploaded_at` | `date` |  |
+| `download_count` | `int4` |  |
+| `branch_id` | `int8` |  |
+| `uploaded_by_id` | `int8` |  |
+
+## Table `core_pyq`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int8` | Primary Identity |
+| `subject` | `varchar` |  |
+| `semester` | `int2` |  |
+| `year` | `int2` |  |
+| `exam_type` | `varchar` |  |
+| `pdf_file` | `varchar` |  Nullable |
+| `pdf_link` | `varchar` |  |
+| `branch_id` | `int8` |  |
+
+## Table `core_reply`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int8` | Primary Identity |
+| `answer` | `text` |  |
+| `is_best` | `bool` |  |
+| `created_at` | `timestamptz` |  |
+| `doubt_id` | `int8` |  |
+| `user_id` | `int8` |  |
+
+## Table `core_syllabus`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int8` | Primary Identity |
+| `subject_name` | `varchar` |  |
+| `subject_code` | `varchar` |  |
+| `semester` | `int2` |  |
+| `units` | `jsonb` |  |
+| `pdf_file` | `varchar` |  Nullable |
+| `pdf_link` | `varchar` |  |
+| `branch_id` | `int8` |  |
+
+## Table `core_bookmark`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int8` | Primary Identity |
+| `saved_at` | `timestamptz` |  |
+| `user_id` | `int8` |  |
+| `note_id` | `int8` |  |
+
+## Table `django_admin_log`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int4` | Primary Identity |
+| `action_time` | `timestamptz` |  |
+| `object_id` | `text` |  Nullable |
+| `object_repr` | `varchar` |  |
+| `action_flag` | `int2` |  |
+| `change_message` | `text` |  |
+| `content_type_id` | `int4` |  Nullable |
+| `user_id` | `int8` |  |
+
+## Table `django_session`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `session_key` | `varchar` | Primary |
+| `session_data` | `text` |  |
+| `expire_date` | `timestamptz` |  |
+
+## Table `django_site`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `int4` | Primary Identity |
+| `domain` | `varchar` |  Unique |
+| `name` | `varchar` |  |
+
+
+
 ### **User**
 - Custom user model extending Django's AbstractUser
 - Fields: role, branch, semester, college, bio, avatar

@@ -11,7 +11,7 @@ python manage.py migrate
 python manage.py makemigrations
 echo "Collecting static files..."
 python manage.py collectstatic --no-input
+echo "creating superuser..."
+python admincreating.py
 
-
-
-echo "Build process completed successfully!"
+echo "Build process completed successfully! (◔◡◔)"
