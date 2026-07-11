@@ -185,7 +185,7 @@ function starsHTML(rating) {
 }
 
 function examLabel(t) {
-  return t==='mid'?'Mid-Sem': t==='end'?'End-Sem':'Backlog';
+  return t==='mid'?'Mid-Sem': t==='F'?'F-siries':'S-Backlog';
 }
 
 function escapeHtml(str) {
