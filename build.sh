@@ -7,8 +7,8 @@ pip install -r requirements.txt
 
 # 3. डेटाबेस माइग्रेशन चलाएं (ताकि core_note टेबल वाली एरर ठीक हो सके)
 echo "Running database migrations..."
-python manage.py migrate
 python manage.py makemigrations
+python manage.py migrate
 echo "Collecting static files..."
 python manage.py collectstatic --no-input
 echo "creating superuser..."

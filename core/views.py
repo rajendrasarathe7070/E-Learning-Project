@@ -7,3 +7,6 @@ def search_page(request):
     return render(request, 'search.html')
 
 
+def note_detail(request, slug):
+    note = get_object_or_404(Note, slug=slug)
+    return render(request, 'note_detail.html', {'note': note})

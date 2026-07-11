@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.utils.text import slugify
 
 class Branch(models.Model):
     code = models.CharField(max_length=10, unique=True)
@@ -29,6 +30,8 @@ class User(AbstractUser):
 
 class Note(models.Model):
     title = models.CharField(max_length=200)
+    slug = models.SlugField(null=True, blank=True)
+
     subject = models.CharField(max_length=100)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, db_index=True)
     semester = models.PositiveSmallIntegerField(db_index=True)
@@ -41,6 +44,11 @@ class Note(models.Model):
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
     uploaded_at = models.DateField(auto_now_add=True)
     download_count = models.PositiveIntegerField(default=0)
+     
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title) # Title ko URL-friendly banata hai
+        super().save(*args, **kwargs)
 
     def clean(self):
         if not self.pdf_file and not self.pdf_link:

@@ -24,8 +24,10 @@ class DynamicFilterSitemap(Sitemap):
 class DetailSitemap(Sitemap):
     priority = 0.5
     changefreq = 'monthly'
+    
     def items(self):
-        # Notes की जगह Note का इस्तेमाल
         return Note.objects.all()[:500]
+    
     def location(self, item):
-        return f"/notes/{item.id}/"
+        # 'item.id' ki jagah 'item.slug' use karein
+        return f"/notes/{item.slug}/"
