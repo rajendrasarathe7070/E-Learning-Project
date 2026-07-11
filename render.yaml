@@ -6,6 +6,7 @@ services:
     plan: free
     buildCommand: bash build.sh
     startCommand: gunicorn minor.wsgi:application --log-file -
+    releaseCommand: python manage.py migrate
     envVars:
       - key: DEBUG
         value: 'False'

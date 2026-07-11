@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -71,19 +73,44 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'minor.wsgi.application'
 
-import os
+def get_database_config():
+    database_url = os.environ.get('DATABASE_URL')
+    if database_url:
+        config = dj_database_url.parse(database_url)
+        config.update({
+            'CONN_MAX_AGE': 600,
+            'CONN_HEALTH_CHECKS': True,
+        })
+        return config
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'gpc_db'),      # डिफ़ॉल्ट वैल्यू देना है तो दें
-        'USER': os.environ.get('DB_USER', 'gpc_user'),      # डिफ़ॉल्ट वैल्यू देना है तो दें
-        'PASSWORD': os.environ.get('DB_PASSWORD'),               # ⚠️ बिना डिफ़ॉल्ट के (ENV में डालना अनिवार्य)
-        'HOST': os.environ.get('DB_HOST', 'db.khpacdsusjofcdvzzhzs.supabase.co'),          # लोकल के लिए localhost
-        'PORT': os.environ.get('DB_PORT', '5432'),
+    db_name = os.environ.get('DB_NAME')
+    db_user = os.environ.get('DB_USER')
+    db_password = os.environ.get('DB_PASSWORD')
+    db_host = os.environ.get('DB_HOST')
+    db_port = os.environ.get('DB_PORT')
+
+    if any([db_name, db_user, db_password, db_host, db_port]):
+        return {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': db_name or 'gpc_db',
+            'USER': db_user or 'gpc_user',
+            'PASSWORD': db_password,
+            'HOST': db_host,
+            'PORT': db_port or '5432',
+            'CONN_MAX_AGE': 600,
+            'CONN_HEALTH_CHECKS': True,
+        }
+
+    return {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
         'CONN_MAX_AGE': 600,
         'CONN_HEALTH_CHECKS': True,
     }
+
+
+DATABASES = {
+    'default': get_database_config(),
 }
 
 # Password validation
