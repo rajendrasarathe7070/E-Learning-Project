@@ -30,7 +30,7 @@ from django.contrib.sitemaps.views import sitemap
 from .sitemaps import StaticSitemap, DynamicFilterSitemap, DetailSitemap
 from core import views
 from minor.sitemaps import PYQSitemap 
-
+from core.views import pyq_page
 # ✅ यह Dictionary (Variable) सबसे पहले Define होना चाहिए
 sitemaps = {
     'static': StaticSitemap,
@@ -65,7 +65,9 @@ urlpatterns = [
     path('notes/', TemplateView.as_view(template_name='notes.html'), name='notes'),
     path('syllabus/', TemplateView.as_view(template_name='syllabus.html'), name='syllabus'),
     path('books/', TemplateView.as_view(template_name='books.html'), name='books'),
-    path('pyq/', TemplateView.as_view(template_name='pyq.html'), name='pyq'),
+  
+    path('pyq/', views.pyq_page, name='pyq'),
+
     path('doubts/', TemplateView.as_view(template_name='doubts.html'), name='doubts'),
     path('profile/', TemplateView.as_view(template_name='profile.html'), name='profile'),
     # path('search/', TemplateView.as_view(template_name='search.html'),name='Global search')
