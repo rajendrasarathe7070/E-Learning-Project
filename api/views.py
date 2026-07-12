@@ -315,19 +315,33 @@ def _pyq_to_dict(p: PYQ) -> dict[str, Any]:
 
 @require_http_methods(["GET"])
 def pyqs_list(request: HttpRequest):
+    search_query = (request.GET.get("search") or request.GET.get("q") or "").strip()
     branch_code = (request.GET.get("branch") or "all").strip()
     exam_type = (request.GET.get("exam_type") or "all").strip()
-    year = request.GET.get("year")
+    year = (request.GET.get("year") or "all").strip()
 
     qs = PYQ.objects.select_related("branch")
+
+    if search_query:
+        search_filter = (
+            Q(subject__icontains=search_query)
+            | Q(branch__code__icontains=search_query)
+            | Q(branch__name__icontains=search_query)
+            | Q(exam_type__icontains=search_query)
+        )
+        numeric_query = _parse_int(search_query)
+        if numeric_query is not None:
+            search_filter |= Q(year=numeric_query) | Q(semester=numeric_query)
+        qs = qs.filter(search_filter)
+
     if branch_code and branch_code.lower() != "all":
-        qs = qs.filter(branch__code=branch_code)
+        qs = qs.filter(branch__code__iexact=branch_code)
     if exam_type and exam_type.lower() != "all":
         qs = qs.filter(exam_type=exam_type)
     if year and year.lower() != "all":
-        y = _parse_int(year)
-        if y is not None:
-            qs = qs.filter(year=y)
+        selected_year = _parse_int(year)
+        if selected_year is not None:
+            qs = qs.filter(year=selected_year)
 
     pyqs = [_pyq_to_dict(p) for p in qs.order_by("-year", "-id")[:500]]
     return JsonResponse({"pyqs": pyqs})
@@ -356,7 +370,7 @@ def upload_pyq(request: HttpRequest):
     if not branch:
         return _json_error("Invalid branch")
 
-    PYQ.objects.create(
+    pyq = PYQ.objects.create(
         subject=subject,
         branch=branch,
         semester=semester,
@@ -365,7 +379,7 @@ def upload_pyq(request: HttpRequest):
         pdf_link=pdf_link,
     )
 
-    return JsonResponse({"ok": True})
+    return JsonResponse({"ok": True, "pyq": _pyq_to_dict(pyq)})
 
 
 # -----------------
