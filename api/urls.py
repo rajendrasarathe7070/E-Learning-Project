@@ -16,6 +16,7 @@ from .views import (
     pyqs_list,
     upload_pyq,
     syllabus_list,
+    syllabus_detail_by_slug,
     upload_syllabus,
     doubts_list,
     ask_doubt,
@@ -61,6 +62,7 @@ urlpatterns = [
 
     # Syllabus
     path('syllabus/', syllabus_list, name='syllabus_list'),
+    path('syllabus/<slug:slug>/', syllabus_detail_by_slug, name='syllabus_detail'),
     path('syllabus/upload/', upload_syllabus, name='upload_syllabus'),
 
     # Doubts + Replies

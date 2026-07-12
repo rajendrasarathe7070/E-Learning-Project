@@ -90,6 +90,7 @@ urlpatterns = [
     path('notes/<slug:slug>/', views.note_detail, name='note_detail'),
         # PYQ Detail Page के लिए यह पाथ जोड़ें
     path('pyq/<slug:slug>/', views.pyq_detail, name='pyq_detail'),
+    path('syllabus/<slug:slug>/', views.syllabus_detail, name='syllabus_detail'),
 
 ]
 

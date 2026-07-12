@@ -394,26 +394,112 @@ def _syllabus_to_dict(s: Syllabus) -> dict[str, Any]:
             pdf_url = s.pdf_file.url
         except Exception:
             pass
+    # safe pdf url handling
+    if not pdf_url:
+        pdf_url = ""
+
+    branch_code = s.branch.code if s.branch_id else None
+    try:
+        # if branch not prefetched fully
+        if s.branch_id and not branch_code:
+            branch_code = s.branch.code
+    except Exception:
+        pass
 
     return {
         "id": s.id,
         "subject_name": s.subject_name,
         "subject_code": s.subject_code,
-        "branch": s.branch.code if s.branch_id else None,
+        "slug": getattr(s, "slug", None),
+        "branch": branch_code,
         "semester": s.semester,
-        "units": s.units,
+        "units": s.units if isinstance(s.units, list) else [],
+        "description": getattr(s, "description", "") or "",
         "pdf_url": pdf_url,
+        "is_active": getattr(s, "is_active", True),
+        "created_at": s.created_at.isoformat() if getattr(s, "created_at", None) and hasattr(s.created_at, "isoformat") else None,
+        "updated_at": s.updated_at.isoformat() if getattr(s, "updated_at", None) and hasattr(s.updated_at, "isoformat") else None,
+        "uploaded_by": getattr(getattr(s, "uploaded_by", None), "username", None),
     }
 
 
 @require_http_methods(["GET"])
 def syllabus_list(request: HttpRequest):
     branch_code = (request.GET.get("branch") or "all").strip()
-    qs = Syllabus.objects.select_related("branch")
+    semester = (request.GET.get("semester") or "all").strip()
+    search_query = (request.GET.get("search") or request.GET.get("q") or "").strip()
+    subject_code = (request.GET.get("subject_code") or "").strip()
+
+    qs = Syllabus.objects.select_related("branch", "uploaded_by").filter(is_active=True)
+
     if branch_code and branch_code.lower() != "all":
-        qs = qs.filter(branch__code=branch_code)
-    syllabi = [_syllabus_to_dict(s) for s in qs.order_by("-id")[:500]]
-    return JsonResponse({"syllabi": syllabi})
+        qs = qs.filter(branch__code__iexact=branch_code)
+
+    if semester and semester.lower() != "all":
+        sem_int = _parse_int(semester)
+        if sem_int is not None:
+            qs = qs.filter(semester=sem_int)
+
+    if subject_code:
+        qs = qs.filter(subject_code__icontains=subject_code)
+
+    if search_query:
+        search_filter = (
+            Q(subject_name__icontains=search_query)
+            | Q(subject_code__icontains=search_query)
+            | Q(description__icontains=search_query)
+            | Q(branch__code__icontains=search_query)
+            | Q(branch__name__icontains=search_query)
+        )
+        # allow numeric search for semester
+        numeric_q = _parse_int(search_query)
+        if numeric_q is not None:
+            search_filter |= Q(semester=numeric_q)
+        # also search inside JSON units? not directly, fallback to python filtering later if needed
+        qs = qs.filter(search_filter)
+
+    # order by newest first, but also by semester
+    qs = qs.order_by("-created_at", "-id")
+
+    # pagination simple: limit + offset
+    limit = _parse_int(request.GET.get("limit"), 500)
+    offset = _parse_int(request.GET.get("offset"), 0)
+    if limit is None or limit <= 0:
+        limit = 500
+    if limit > 1000:
+        limit = 1000
+    if offset is None or offset < 0:
+        offset = 0
+
+    syllabi_qs = qs[offset:offset+limit]
+    syllabi = [_syllabus_to_dict(s) for s in syllabi_qs]
+
+    # If search includes unit topics and db filtering missed, do additional in-memory filtering for units
+    if search_query and syllabi:
+        lowered = search_query.lower()
+        # if already some results, keep them, but also add unit-topic matches if not yet included? We'll filter current list for tighter match after initial
+        # already filtered by main fields; if user typed unit topic, we might have missed. So supplement:
+        extra_qs = Syllabus.objects.select_related("branch", "uploaded_by").filter(is_active=True)
+        # we will scan all active for unit match if no results or to be thorough
+        if len(syllabi) < 5:
+            # broaden: check all syllabi for unit topic match
+            all_s = Syllabus.objects.select_related("branch", "uploaded_by").filter(is_active=True).order_by("-created_at")[:500]
+            matched = []
+            for s_item in all_s:
+                if any(lowered in str(u.get("topic", "")).lower() for u in (s_item.units or []) if isinstance(u, dict)):
+                    if s_item.id not in [x["id"] for x in syllabi]:
+                        matched.append(_syllabus_to_dict(s_item))
+            syllabi = syllabi + matched
+
+    return JsonResponse({"syllabi": syllabi, "count": len(syllabi), "limit": limit, "offset": offset})
+
+
+@require_http_methods(["GET"])
+def syllabus_detail_by_slug(request: HttpRequest, slug: str):
+    s = Syllabus.objects.select_related("branch", "uploaded_by").filter(slug=slug, is_active=True).first()
+    if not s:
+        return _json_error("Syllabus not found", status=404)
+    return JsonResponse({"syllabus": _syllabus_to_dict(s)})
 
 
 @require_http_methods(["POST"])
@@ -422,7 +508,7 @@ def upload_syllabus(request: HttpRequest):
     if login_err:
         return login_err
 
-    if getattr(request.user, "role", None) != "super_student":
+    if getattr(request.user, "role", None) not in ("super_student", "admin"):
         return HttpResponseForbidden("Only super students can upload")
 
     subject_name = (request.POST.get("subject_name") or "").strip()
@@ -431,31 +517,63 @@ def upload_syllabus(request: HttpRequest):
     semester = _parse_int(request.POST.get("semester"), None)
     units_raw = (request.POST.get("units") or "[]").strip()
     pdf_link = (request.POST.get("pdf_link") or "").strip()
+    description = (request.POST.get("description") or "").strip()
+    pdf_file = request.FILES.get("pdf_file") if hasattr(request, "FILES") else None
 
-    if not subject_name or not subject_code or not branch_code or semester is None or not pdf_link:
-        return _json_error("Missing required fields")
+    if not subject_name or not subject_code or not branch_code or semester is None:
+        return _json_error("Missing required fields: subject_name, subject_code, branch, semester")
+
+    if not pdf_link and not pdf_file:
+        return _json_error("Either PDF link or PDF file is required")
 
     import json
 
     try:
         units = json.loads(units_raw) if units_raw else []
-    except Exception:
-        units = []
+        if not isinstance(units, list):
+            return _json_error("Units must be a JSON array")
+        # validate each unit
+        validated_units = []
+        for idx, u in enumerate(units):
+            if not isinstance(u, dict):
+                return _json_error(f"Unit at index {idx} must be an object")
+            n_val = u.get("n")
+            topic_val = (u.get("topic") or "").strip()
+            if n_val is None or not topic_val:
+                return _json_error(f"Unit at index {idx} requires 'n' and 'topic'")
+            try:
+                n_int = int(n_val)
+            except Exception:
+                n_int = idx + 1
+            validated_units.append({"n": n_int, "topic": topic_val})
+        units = validated_units
+    except json.JSONDecodeError:
+        return _json_error("Units JSON is invalid")
+    except Exception as e:
+        return _json_error(str(e))
 
     branch = Branch.objects.filter(code=branch_code).first()
     if not branch:
         return _json_error("Invalid branch")
 
-    Syllabus.objects.create(
+    # check duplicate
+    if Syllabus.objects.filter(subject_code__iexact=subject_code, branch=branch, semester=semester).exists():
+        return _json_error(f"Syllabus with code {subject_code} already exists for {branch_code} Sem {semester}", status=409)
+
+    syllabus = Syllabus.objects.create(
         subject_name=subject_name,
         subject_code=subject_code,
         branch=branch,
         semester=semester,
         units=units,
         pdf_link=pdf_link,
+        pdf_file=pdf_file,
+        description=description,
+        uploaded_by=request.user,
+        is_active=True,
     )
 
-    return JsonResponse({"ok": True})
+    return JsonResponse({"ok": True, "id": syllabus.id, "slug": syllabus.slug, "syllabus": _syllabus_to_dict(syllabus)})
 
 
 # -----------------

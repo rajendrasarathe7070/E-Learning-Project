@@ -117,13 +117,77 @@ class PYQ(models.Model):
 
 
 class Syllabus(models.Model):
-    subject_name = models.CharField(max_length=100)
-    subject_code = models.CharField(max_length=20)
+    subject_name = models.CharField(max_length=200)
+    subject_code = models.CharField(max_length=30, db_index=True)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, db_index=True)
     semester = models.PositiveSmallIntegerField(db_index=True)
     units = models.JSONField(default=list)   # e.g. [{"n":1,"topic":"..."}, ...]
     pdf_file = models.FileField(upload_to='syllabi/', null=True, blank=True)
     pdf_link = models.URLField(blank=True)
+    slug = models.SlugField(max_length=250, unique=True, blank=True, null=True)
+    description = models.TextField(blank=True)
+    uploaded_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='syllabi')
+    is_active = models.BooleanField(default=True, db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        constraints = [
+            models.UniqueConstraint(fields=['subject_code', 'branch', 'semester'], name='unique_syllabus_code_branch_sem')
+        ]
+        indexes = [
+            models.Index(fields=['subject_code', 'branch', 'semester']),
+        ]
+
+    def __str__(self):
+        return f"{self.subject_name} ({self.subject_code}) - {self.branch} Sem{self.semester}"
+
+    def clean(self):
+        if not self.pdf_file and not self.pdf_link:
+            raise ValidationError("Either PDF file or PDF link is required.")
+        # validate units structure if possible
+        if self.units:
+            if not isinstance(self.units, list):
+                raise ValidationError({"units": "Units must be a list."})
+            for idx, unit in enumerate(self.units):
+                if not isinstance(unit, dict):
+                    raise ValidationError({"units": f"Unit at index {idx} must be an object with 'n' and 'topic'."})
+                if 'n' not in unit or 'topic' not in unit:
+                    raise ValidationError({"units": f"Unit at index {idx} missing 'n' or 'topic'."})
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base = f"{self.subject_name} {self.subject_code} {self.branch.code if self.branch_id and hasattr(self.branch, 'code') else self.branch_id} sem{self.semester}"
+            # if branch not loaded, fallback
+            try:
+                if self.branch_id and not hasattr(self.branch, 'code'):
+                    branch_obj = Branch.objects.filter(pk=self.branch_id).first()
+                    if branch_obj:
+                        base = f"{self.subject_name} {self.subject_code} {branch_obj.code} sem{self.semester}"
+            except Exception:
+                pass
+            original_slug = slugify(base)[:240]
+            queryset_count = Syllabus.objects.filter(slug__iexact=original_slug).count()
+            slug_candidate = original_slug
+            counter = 1
+            while queryset_count:
+                # exclude self if updating
+                qs = Syllabus.objects.filter(slug__iexact=slug_candidate)
+                if self.pk:
+                    qs = qs.exclude(pk=self.pk)
+                if not qs.exists():
+                    break
+                slug_candidate = f"{original_slug}-{counter}"
+                counter += 1
+                queryset_count = 1  # force loop check again via qs.exists
+                # next iteration will check qs.exists
+                # to avoid infinite, but we already check exists
+            self.slug = slug_candidate
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('syllabus_detail', kwargs={'slug': self.slug})
 
 class Doubt(models.Model):
     title = models.CharField(max_length=200)
