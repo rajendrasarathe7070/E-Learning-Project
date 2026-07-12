@@ -69,25 +69,31 @@
   {% endif %}
     </div>
 
-    <div class="card-glass" style="padding:1rem;margin-bottom:1.5rem;display:flex;flex-direction:column;gap:.75rem">
-      <div style="display:flex;flex-wrap:wrap;gap:.4rem" id="year-pills"></div>
-      <div style="display:flex;flex-wrap:wrap;gap:.75rem">
-        
-        <!-- 🔍 यहाँ पुराना ब्रांच सेलेक्ट बॉक्स हटाकर ऑटो-सर्च इनपुट बार लगाया गया है -->
-        <input type="text" class="field" id="search-pyq" placeholder="🔍 विषय या कोड सर्च करें..." style="width:auto;flex:2;min-width:200px" oninput="renderPYQ()">
+    <section class="card-glass pyq-filter-panel" aria-label="PYQ filters">
+      <div class="pyq-year-pills" id="year-pills" aria-label="Filter by year"></div>
+      <div class="pyq-filter-row">
+        <label class="visually-hidden" for="search-pyq">Search question papers</label>
+        <input
+          type="search"
+          class="field"
+          id="search-pyq"
+          value="{{ query|default:'' }}"
+          placeholder="🔍 विषय, ब्रांच, सेमेस्टर या वर्ष खोजें..."
+          autocomplete="off"
+        >
 
-        <select class="field" id="filter-type" style="width:auto;flex:1;min-width:150px" onchange="renderPYQ()">
+        <label class="visually-hidden" for="filter-type">Filter by exam type</label>
+        <select class="field" id="filter-type">
           <option value="all">All types</option>
           <option value="F">F-series</option>
-          <option value="mid">mid-Sem</option>
+          <option value="mid">Mid-Sem</option>
+          <option value="end">End-Sem</option>
           <option value="S">S-series</option>
         </select>
-        
       </div>
+    </section>
 
-    </div>
-
-    <div class="grid-3" id="pyq-grid"></div>
+    <div class="grid-3" id="pyq-grid" aria-live="polite"></div>
   </main>
 
   <div id="toast-wrap" class="toast-wrap"></div>
@@ -106,7 +112,8 @@
         <select class="field" id="pyq-type">
           <option value="">Select Exam Type</option>
           <option value="F">F-series</option>
-          <option value="mid">mid-Sem</option>
+          <option value="mid">Mid-Sem</option>
+          <option value="end">End-Sem</option>
           <option value="S">S-series</option>
         </select>
         <input class="field" id="pyq-pdf" placeholder="PDF link">
@@ -122,217 +129,254 @@
   <script src="{% static 'js/swipe.js' %}"></script>
   <script src="{% static 'js/csrf.js' %}"></script>
 <script>
-    window.isAuthenticated = {% if user.is_authenticated %}true{% else %}false{% endif %};
+  window.isAuthenticated = {% if user.is_authenticated %}true{% else %}false{% endif %};
+
+  const PYQ_LIST_URL = "{% url 'api:pyqs_list' %}";
+  const PYQ_UPLOAD_URL = "{% url 'api:upload_pyq' %}";
   let currentSelectedYear = 'all';
+  let pyqDataLoaded = false;
+  window.pyqData = [];
 
-  // आपका डेटा जो `data.js` से आता है या यहाँ फ़ालबैक की तरह काम करेगा
-  window.pyqData = window.pyqData || [
-    { id: 1, subject: "Data Structures", branch: "CSE", semester: "4", year: "2023", exam_type: "F", pdf_link: "#" },
-    { id: 2, subject: "Digital Electronics", branch: "ECE", semester: "3", year: "2022", exam_type: "mid", pdf_link: "#" },
-    { id: 3, subject: "Strength of Materials", branch: "ME", semester: "4", year: "2023", exam_type: "S", pdf_link: "#" }
-  ];
+  function escapePYQHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, character => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    })[character]);
+  }
 
-  const branchList = ['CSE', 'Civil', 'Mechanical', 'Electrical', 'ECE'];
+  function getSafePdfUrl(value) {
+    if (!value) return '';
 
-  // टोस्ट मैसेज के लिए हेल्पर फ़ंक्शन
-  function showToast(msg) {
-    const wrap = document.getElementById('toast-wrap');
-    if (wrap) {
-      const t = document.createElement('div');
-      t.className = 'toast';
-      t.innerText = msg;
-      wrap.appendChild(t);
-      setTimeout(() => t.remove(), 3000);
+    try {
+      const rawValue = String(value).trim();
+      const parsedUrl = new URL(rawValue, window.location.origin);
+      if (!['http:', 'https:'].includes(parsedUrl.protocol)) return '';
+      return parsedUrl.href;
+    } catch (error) {
+      return '';
     }
   }
 
-  // CSRF टोकन रीड करने के लिए फ़ंक्शन (अपलोड के लिए ज़रूरी)
-  function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
+  function getExamTypeMeta(examType) {
+    const examTypes = {
+      F: { label: 'F-Series', className: 'badge-f' },
+      mid: { label: 'Mid-Sem', className: 'badge-mid' },
+      end: { label: 'End-Sem', className: 'badge-end' },
+      S: { label: 'S-Series', className: 'badge-s' }
+    };
+    return examTypes[examType] || {
+      label: examType || 'Other',
+      className: 'badge-violet'
+    };
   }
 
-  // मॉडल बॉक्स को बंद करने का फ़ंक्शन
-  function closePyqModal(e) {
-      if (!e || e.target === document.getElementById('pyq-modal'))
-          document.getElementById('pyq-modal').style.display = 'none';
+  function normalizeSearchValue(value) {
+    return String(value ?? '').normalize('NFKC').toLocaleLowerCase().trim();
   }
 
-  // ब्रांच के ऑप्शंस बनाने के लिए सुधरा हुआ फ़ंक्शन (फिक्स्ड बैकटिक्स ` `)
-  function branchOptions(selectedBranch, includeAll = false) {
-    let html = includeAll ? '<option value="all">All Branches</option>' : '';
-    branchList.forEach(b => {
-      html += `<option value="${b}" ${b === selectedBranch ? 'selected' : ''}>${b}</option>`;
-    });
-    return html;
+  function closePyqModal(event) {
+    const modal = document.getElementById('pyq-modal');
+    if (!event || event.target === modal) modal.style.display = 'none';
   }
 
-  // अपलोड मॉडल को खोलने का फ़ंक्शन
   function openPyqModal() {
     if (!window.isAuthenticated) {
       showToast('🔒 Please login to upload');
       return;
     }
+
     document.getElementById('pyq-branch').innerHTML = branchOptions('CSE', false);
-    let semHtml = '';
-    for (let s = 1; s <= 8; s++) semHtml += `<option value="${s}" ${s === 4 ? 'selected' : ''}>Sem ${s}</option>`;
-    document.getElementById('pyq-sem').innerHTML = semHtml;
+    let semesterOptions = '';
+    for (let semester = 1; semester <= 8; semester += 1) {
+      semesterOptions += `<option value="${semester}" ${semester === 4 ? 'selected' : ''}>Sem ${semester}</option>`;
+    }
+    document.getElementById('pyq-sem').innerHTML = semesterOptions;
     document.getElementById('pyq-modal').style.display = 'grid';
   }
 
-  // नया PYQ अपलोड सबमिट करने का फ़ंक्शन
-  async function submitPyqUpload() {
-      const subject = document.getElementById('pyq-subject').value.trim();
-      const branch = document.getElementById('pyq-branch').value;
-      const sem = document.getElementById('pyq-sem').value;
-      const year = document.getElementById('pyq-year').value;
-      const type = document.getElementById('pyq-type').value;
-      const pdf = document.getElementById('pyq-pdf').value.trim();
+  async function loadPYQData({ showLoading = true } = {}) {
+    const grid = document.getElementById('pyq-grid');
+    if (showLoading && grid) {
+      grid.innerHTML = '<div class="card-glass pyq-status">⏳ प्रश्न पत्र लोड हो रहे हैं...</div>';
+    }
 
-      if (!subject || !branch || !sem || !year || !type || !pdf) {
-          showToast('Please fill all required fields');
-          return;
-      }
-
-      const fd = new FormData();
-      fd.append('subject', subject);
-      fd.append('branch', branch);
-      fd.append('semester', sem);
-      fd.append('year', year);
-      fd.append('exam_type', type);
-      fd.append('pdf_link', pdf);
-
-      try {
-          const token = getCookie('csrftoken') || '';
-          const res = await fetch('/api/pyqs/upload/', {
-              method: 'POST',
-              headers: {'X-CSRFToken': token},
-              body: fd
-          });
-          const data = await res.json();
-          if (!res.ok) {
-              showToast('Error: ' + (data.error || 'Upload failed'));
-              return;
-          }
-          showToast('✅ PYQ uploaded!');
-          document.getElementById('pyq-modal').style.display = 'none';
-          document.getElementById('pyq-subject').value = '';
-          document.getElementById('pyq-year').value = '';
-          document.getElementById('pyq-pdf').value = '';
-          
-          window.pyqData.unshift({id: Date.now(), subject, branch, semester: sem, year, exam_type: type, pdf_link: pdf});
-          initYearPills();
-          renderPYQ();
-      } catch (err) {
-          showToast('Error: ' + String(err));
-      }
-  }
-
-  // साल के पिल्स (Buttons) ऑटोमैटिक जेनरेट करने का फ़ंक्शन
-  function initYearPills() {
-    const container = document.getElementById('year-pills');
-    if (!container) return;
-    const years = new Set(['all']);
-    window.pyqData.forEach(item => { if(item.year) years.add(String(item.year)); });
-    const sorted = Array.from(years).sort((a,b) => b - a);
-    
-    let html = '';
-    sorted.forEach(y => {
-      html += `<span class="pill ${y === currentSelectedYear ? 'active' : ''}" onclick="filterByYear('${y}')">${y === 'all' ? 'All Years' : y}</span>`;
-    });
-    container.innerHTML = html;
-  }
-
-  // किसी साल पर क्लिक करने पर फ़िल्टर बदलने का फ़ंक्शन
-  function filterByYear(year) {
-    currentSelectedYear = year;
-    initYearPills();
-    renderPYQ();
-  }
-
-  // 100% वर्किंग लाइव सर्च और ऑटो-रेंडर इंजन फ़ंक्शन
-  async function renderPYQ() {
-      const searchQuery = document.getElementById('search-pyq').value.toLowerCase().trim();
-      const type = document.getElementById('filter-type').value;
-      const grid = document.getElementById('pyq-grid');
-      
-      if (!grid) return;
-      grid.innerHTML = '';
-
-      // सर्च और फ़िल्टर करने का लॉजिक
-      const filtered = window.pyqData.filter(item => {
-        const sName = item.subject ? item.subject.toLowerCase() : '';
-        const bName = item.branch ? item.branch.toLowerCase() : '';
-        
-        const matchesSearch = sName.includes(searchQuery) || bName.includes(searchQuery);
-        const matchesType = type === 'all' || item.exam_type === type;
-        const matchesYear = currentSelectedYear === 'all' || String(item.year) === String(currentSelectedYear);
-        
-        return matchesSearch && matchesType && matchesYear;
+    try {
+      const response = await fetch(PYQ_LIST_URL, {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store'
       });
+      if (!response.ok) throw new Error(`Request failed (${response.status})`);
 
-      // यदि कोई रिजल्ट न मिले तो मैसेज दिखाएं
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div class="card-glass" style="grid-column: 1/-1; padding: 2rem; text-align: center; color: gray;">🔍 कोई प्रश्न पत्र नहीं मिला!</div>`;
-        return;
+      const data = await response.json();
+      window.pyqData = Array.isArray(data.pyqs) ? data.pyqs : [];
+      pyqDataLoaded = true;
+      return true;
+    } catch (error) {
+      window.pyqData = [];
+      pyqDataLoaded = false;
+      if (grid) {
+        grid.innerHTML = '<div class="card-glass pyq-status pyq-error">⚠️ प्रश्न पत्र लोड नहीं हो पाए। कृपया पेज दोबारा खोलें।</div>';
       }
-
-      // फ़िल्टर किए हुए पेपर्स का HTML कार्ड बनाना (फिक्स्ड सिंटैक्स)
-      filtered.forEach(item => {
-        let typeClass = 'badge-f';
-        let typeLabel = 'F-Series';
-        if (item.exam_type === 'mid') { typeClass = 'badge-mid'; typeLabel = 'Mid-Sem'; }
-        if (item.exam_type === 'S') { typeClass = 'badge-s'; typeLabel = 'S-Series'; }
-
-        const card = document.createElement('div');
-        card.className = 'card-glass';
-        card.style.padding = '1.25rem';
-        card.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:start; gap:1rem;">
-            <h3 style="font-size:1.1rem; flex:1; color:var(--foreground);">${item.subject}</h3>
-            <span class="badge ${typeClass}">${typeLabel}</span>
-          </div>
-          <div style="margin: 0.5rem 0; display:flex; gap:0.5rem;">
-            <small style="background:rgba(108,99,255,0.08); padding:2px 6px; border-radius:4px; color:var(--accent-1);">${item.branch}</small>
-            <small style="background:rgba(0,153,204,0.08); padding:2px 6px; border-radius:4px; color:var(--accent-2);">Sem ${item.semester}</small>
-            <small style="background:rgba(232,74,122,0.08); padding:2px 6px; border-radius:4px; color:var(--accent-3);">${item.year}</small>
-          </div>
-          <div style="margin-top:1rem;">
-            <a href="${item.pdf_link}" target="_blank" class="btn btn-primary btn-sm" style="width:100%; text-align:center; justify-content:center;">📥 Download PDF</a>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-  }
-
-  // थीम टॉगल फ़ंक्शन (बिना HTML एट्रिब्यूट बदले काम करने के लिए)
-  function toggleTheme() {
-    const body = document.body;
-    if (body.classList.contains('dark-theme')) {
-      body.classList.remove('dark-theme');
-      localStorage.setItem('theme', 'light');
-    } else {
-      body.classList.add('dark-theme');
-      localStorage.setItem('theme', 'dark');
+      console.error('Unable to load PYQ data:', error);
+      showToast('PYQ data load नहीं हो पाया');
+      return false;
     }
   }
 
-  // पेज लोड होते ही डेटा रेंडर करना शुरू करें
-  document.addEventListener('DOMContentLoaded', () => {
+  async function submitPyqUpload() {
+    const subject = document.getElementById('pyq-subject').value.trim();
+    const branch = document.getElementById('pyq-branch').value;
+    const semester = document.getElementById('pyq-sem').value;
+    const year = document.getElementById('pyq-year').value;
+    const examType = document.getElementById('pyq-type').value;
+    const pdfLink = document.getElementById('pyq-pdf').value.trim();
+
+    if (!subject || !branch || !semester || !year || !examType || !pdfLink) {
+      showToast('Please fill all required fields');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('subject', subject);
+    formData.append('branch', branch);
+    formData.append('semester', semester);
+    formData.append('year', year);
+    formData.append('exam_type', examType);
+    formData.append('pdf_link', pdfLink);
+
+    try {
+      const response = await fetch(PYQ_UPLOAD_URL, {
+        method: 'POST',
+        headers: { 'X-CSRFToken': getCookie('csrftoken') || '' },
+        body: formData
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        showToast('Error: ' + (data.error || 'Upload failed'));
+        return;
+      }
+
+      showToast('✅ PYQ uploaded!');
+      document.getElementById('pyq-modal').style.display = 'none';
+      document.getElementById('pyq-subject').value = '';
+      document.getElementById('pyq-year').value = '';
+      document.getElementById('pyq-pdf').value = '';
+
+      await loadPYQData({ showLoading: false });
+      initYearPills();
+      renderPYQ();
+    } catch (error) {
+      showToast('Error: ' + String(error));
+    }
+  }
+
+  function initYearPills() {
+    const container = document.getElementById('year-pills');
+    if (!container) return;
+
+    const years = [...new Set(
+      window.pyqData
+        .map(item => String(item.year || '').trim())
+        .filter(Boolean)
+    )].sort((first, second) => Number(second) - Number(first));
+
+    if (currentSelectedYear !== 'all' && !years.includes(currentSelectedYear)) {
+      currentSelectedYear = 'all';
+    }
+
+    const allYears = ['all', ...years];
+    container.innerHTML = allYears.map(year => `
+      <button
+        type="button"
+        class="pill ${year === currentSelectedYear ? 'active' : ''}"
+        onclick="filterByYear('${escapePYQHtml(year)}')"
+      >${year === 'all' ? 'All Years' : escapePYQHtml(year)}</button>
+    `).join('');
+  }
+
+  function filterByYear(year) {
+    currentSelectedYear = String(year);
     initYearPills();
     renderPYQ();
-  });
+  }
 
-  </script>
+  function renderPYQ() {
+    const searchInput = document.getElementById('search-pyq');
+    const typeFilter = document.getElementById('filter-type');
+    const grid = document.getElementById('pyq-grid');
+    if (!searchInput || !typeFilter || !grid || !pyqDataLoaded) return;
+
+    const searchTerms = normalizeSearchValue(searchInput.value).split(/\s+/).filter(Boolean);
+    const selectedType = typeFilter.value;
+
+    const filteredPapers = window.pyqData.filter(item => {
+      const typeMeta = getExamTypeMeta(item.exam_type);
+      const searchableText = normalizeSearchValue([
+        item.subject,
+        item.branch,
+        item.semester,
+        `sem ${item.semester ?? ''}`,
+        item.year,
+        item.exam_type,
+        typeMeta.label
+      ].join(' '));
+
+      const matchesSearch = searchTerms.every(term => searchableText.includes(term));
+      const matchesType = selectedType === 'all' || item.exam_type === selectedType;
+      const matchesYear = currentSelectedYear === 'all' || String(item.year) === currentSelectedYear;
+      return matchesSearch && matchesType && matchesYear;
+    });
+
+    if (filteredPapers.length === 0) {
+      const message = window.pyqData.length === 0
+        ? 'अभी कोई प्रश्न पत्र उपलब्ध नहीं है।'
+        : '🔍 इन फिल्टर से कोई प्रश्न पत्र नहीं मिला।';
+      grid.innerHTML = `<div class="card-glass pyq-status">${message}</div>`;
+      return;
+    }
+
+    grid.innerHTML = filteredPapers.map(item => {
+      const typeMeta = getExamTypeMeta(item.exam_type);
+      const pdfUrl = getSafePdfUrl(item.pdf_url || item.pdf_link);
+      const downloadAction = pdfUrl
+        ? `<a href="${escapePYQHtml(pdfUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm pyq-download">📥 Download PDF</a>`
+        : '<span class="btn btn-ghost btn-sm pyq-download pyq-download-disabled">PDF उपलब्ध नहीं है</span>';
+
+      return `
+        <article class="card-glass pyq-card">
+          <div class="pyq-card-heading">
+            <h3>${escapePYQHtml(item.subject)}</h3>
+            <span class="badge ${typeMeta.className}">${escapePYQHtml(typeMeta.label)}</span>
+          </div>
+          <div class="pyq-card-meta">
+            <span class="pyq-meta-branch">${escapePYQHtml(item.branch || 'N/A')}</span>
+            <span class="pyq-meta-semester">Sem ${escapePYQHtml(item.semester || 'N/A')}</span>
+            <span class="pyq-meta-year">${escapePYQHtml(item.year || 'N/A')}</span>
+          </div>
+          <div class="pyq-card-action">${downloadAction}</div>
+        </article>
+      `;
+    }).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const searchInput = document.getElementById('search-pyq');
+    const typeFilter = document.getElementById('filter-type');
+
+    if (!searchInput.value) {
+      searchInput.value = new URLSearchParams(window.location.search).get('q') || '';
+    }
+    searchInput.addEventListener('input', renderPYQ);
+    typeFilter.addEventListener('change', renderPYQ);
+
+    initCommon();
+    const loaded = await loadPYQData();
+    initYearPills();
+    if (loaded) renderPYQ();
+  });
+</script>
 </body>
 </html>

@@ -71,7 +71,12 @@ class Book(models.Model):
  # स्लग बनाने के लिए ज़रूरी है
 
 class PYQ(models.Model):
-    EXAM_TYPES = [('F', 'F-siries'), ('end', 'End-Sem'), ('S', 'S-siries')]
+    EXAM_TYPES = [
+        ('F', 'F-Series'),
+        ('mid', 'Mid-Sem'),
+        ('end', 'End-Sem'),
+        ('S', 'S-Series'),
+    ]
     
     subject = models.CharField(max_length=100)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, db_index=True)
