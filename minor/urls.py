@@ -27,7 +27,7 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.sitemaps.views import sitemap
-from .sitemaps import StaticSitemap, DynamicFilterSitemap, DetailSitemap
+from .sitemaps import StaticSitemap, DynamicFilterSitemap, DetailSitemap, SyllabusSitemap
 from core import views
 from minor.sitemaps import PYQSitemap 
 from core.views import pyq_page
@@ -37,6 +37,7 @@ sitemaps = {
     'dynamic_filters': DynamicFilterSitemap,
     'details': DetailSitemap,
     'pyqs': PYQSitemap,
+    'syllabus': SyllabusSitemap,
 }
 
 

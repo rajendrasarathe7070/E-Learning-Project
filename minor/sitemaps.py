@@ -1,6 +1,6 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
-from core.models import Note, PYQ  # यहाँ 'minor' का इस्तेमाल करें
+from core.models import Note, PYQ, Syllabus  # यहाँ 'minor' का इस्तेमाल करें
 
 
 
@@ -40,3 +40,17 @@ class PYQSitemap(Sitemap):
     def items(self):
         # यह केवल उन्हीं PYQs को साइटमैप में लाएगा जिनका स्लग खाली नहीं है
         return PYQ.objects.filter(slug__isnull=False).exclude(slug='')
+
+    def location(self, obj):
+        return f"/pyq/{obj.slug}/"
+
+
+class SyllabusSitemap(Sitemap):
+    changefreq = "weekly"
+    priority = 0.7
+
+    def items(self):
+        return Syllabus.objects.filter(slug__isnull=False, is_active=True).exclude(slug='')[:500]
+
+    def location(self, obj):
+        return f"/syllabus/{obj.slug}/"
