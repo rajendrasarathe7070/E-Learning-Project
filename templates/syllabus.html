@@ -1,19 +1,41 @@
 {% load static %}
-{% url 'index' as index_%}
-{% url 'notes' as notes_%}
-{% url 'syllabus' as syllabus_%}
-{% url 'books' as books_%}
-{% url 'pyq' as pyq_%}
-{% url 'doubts' as doubts_%}
-{% url 'profile' as profile_%}
+{% url 'index' as index_ %}
+{% url 'notes' as notes_ %}
+{% url 'syllabus' as syllabus_ %}
+{% url 'books' as books_ %}
+{% url 'pyq' as pyq_ %}
+{% url 'doubts' as doubts_ %}
+{% url 'profile' as profile_ %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>diploma syllabus </title>
+  <title>Syllabus Browser - Diploma Syllabus | E-Learn</title>
+  <meta name="description" content="Browse semester-wise syllabus by branch, unit-wise topics, view and download PDFs for GPC Harsud diploma courses.">
   <meta name="google-site-verification" content="60IgBTJrYhG7P3B2JvdgjlBdoom9xrAfi12Q3FfCUTA" />
   <link id="theme-stylesheet" rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    /* Enhanced syllabus page specific */
+    .syllabus-filter-panel { padding: 1rem; display: flex; flex-direction: column; gap: .9rem; margin-bottom: 1.5rem; }
+    .syllabus-filter-row { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+    .syllabus-search-input { flex: 2; min-width: 220px; }
+    .syllabus-meta-pills { display:flex; flex-wrap:wrap; gap:.4rem; }
+    .semester-pills { display:flex; flex-wrap:wrap; gap:.35rem; padding:.25rem 0; }
+    .semester-pills .pill { font-size:.8rem; padding:.28rem .65rem; }
+    .syllabus-stats { font-size:.75rem; color:var(--muted); font-family: var(--font-mono, monospace); }
+    .syllabus-card { padding:1.25rem; display:flex; flex-direction:column; transition: transform .2s, box-shadow .2s; }
+    .syllabus-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108,99,255,0.12); }
+    .syllabus-card .units-list { margin-top:.75rem; display:flex; flex-direction:column; gap:.4rem; max-height:0; overflow:hidden; transition: max-height .5s ease, opacity .3s; opacity:0; }
+    .syllabus-card .units-list.open { max-height:800px; opacity:1; }
+    .syllabus-card .description-text { font-size:.82rem; color:var(--muted); margin:.4rem 0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .syllabus-card .card-footer { display:flex; gap:.5rem; margin-top:auto; padding-top:1rem; flex-wrap:wrap; }
+    .empty-state { padding:2rem; text-align:center; color:var(--muted); }
+    .skeleton { background: linear-gradient(90deg, rgba(108,99,255,0.06) 25%, rgba(108,99,255,0.12) 50%, rgba(108,99,255,0.06) 75%); background-size:200% 100%; animation: shimmer 1.5s infinite; border-radius:.75rem; }
+    @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+    .syllabus-topbar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    .field.search-field { padding-left:2.2rem; background-image: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;%23999&quot; stroke-width=&quot;2&quot;><circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;8&quot;/><path d=&quot;m21 21-4.3-4.3&quot;/></svg>'); background-repeat:no-repeat; background-position: .7rem center; }
+  </style>
 </head>
 <body>
   <div id="particles" class="particles"></div>
@@ -29,7 +51,7 @@
       <div class="nav-links">
         <a href="{% url 'index' %}" class="nav-link">🏠 Home</a>
         <a href="{% url 'notes' %}" class="nav-link">📝 Notes</a>
-        <a href="{% url 'syllabus' %}" class="nav-link">📗 Syllabus</a>
+        <a href="{% url 'syllabus' %}" class="nav-link active">📗 Syllabus</a>
         <a href="{% url 'books' %}" class="nav-link">📖 Books</a>
         <a href="{% url 'pyq' %}" class="nav-link">📄 PYQ</a>
         <a href="{% url 'doubts' %}" class="nav-link">❓ Doubts</a>
@@ -51,63 +73,119 @@
   <nav class="mobile-nav">
     <a href="{% url 'index' %}">🏠<span>Home</span></a>
     <a href="{% url 'notes' %}">📝<span>Notes</span></a>
-    <a href="{% url 'syllabus' %}">📗<span>Syllabus</span></a>
+    <a href="{% url 'syllabus' %}" class="active">📗<span>Syllabus</span></a>
     <a href="{% url 'books' %}">📖<span>Books</span></a>
     <a href="{% url 'pyq' %}">📄<span>PYQ</span></a>
-    <!-- <a href="{% url 'doubts' %}">❓<span>Doubts</span></a> -->
-    
   </nav>
 
   <main class="container page-content page-enter">
     <div class="page-header">
-      <h1 class="gradient-text">📗 Syllabus Browser</h1>
-      <p>Unit-wise breakdown by branch &amp; semester. View or download PDFs.</p>
-       <div style="margin-top:1.25rem;display:flex;justify-content:flex-end ">
-      {% if user.is_authenticated and user.role == 'super_student' %}
-        <button id="syllabus-admin-toggle" type="button" class="btn btn-primary" onclick="openSyllabusModal()">
-          ➕ Add Syllabus
-        </button>
-      {% endif %}
+      <div class="syllabus-topbar">
+        <div>
+          <h1 class="gradient-text">📗 Syllabus Browser</h1>
+          <p>Unit-wise breakdown by branch & semester. Search, filter, view or download PDFs.</p>
+          <p class="syllabus-stats" id="syllabus-count">Loading...</p>
+        </div>
+        <div style="display:flex;gap:.6rem;align-items:center">
+          {% if user.is_authenticated and user.role == 'super_student' or user.is_authenticated and user.role == 'admin' %}
+            <button id="syllabus-admin-toggle" type="button" class="btn btn-primary" onclick="openSyllabusModal()">
+              ➕ Add Syllabus
+            </button>
+          {% endif %}
+        </div>
+      </div>
     </div>
-    </div>
-      
-    <div class="pill-bar reveal" id="branch-pills"></div>
 
-    <div class="grid-2" id="syllabus-grid"></div>
+    <!-- Enhanced Filter Panel -->
+    <section class="card-glass syllabus-filter-panel reveal" aria-label="Syllabus filters">
+      <div class="syllabus-filter-row">
+        <div class="syllabus-meta-pills" id="branch-pills" aria-label="Filter by branch"></div>
+      </div>
+      <div class="syllabus-filter-row">
+        <div class="semester-pills" id="semester-pills" aria-label="Filter by semester"></div>
+      </div>
+      <div class="syllabus-filter-row">
+        <input type="search" class="field search-field syllabus-search-input" id="search-syllabus" placeholder="🔍 विषय, कोड, यूनिट टॉपिक या विवरण खोजें..." autocomplete="off" oninput="debouncedRender()">
+        <select class="field" id="sort-syllabus" style="min-width:150px" onchange="renderSyllabus()">
+          <option value="newest">Newest first</option>
+          <option value="semester">Semester wise</option>
+          <option value="name_asc">Name A-Z</option>
+          <option value="name_desc">Name Z-A</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" onclick="clearFilters()" title="Clear all filters">✕ Clear</button>
+      </div>
+    </section>
+
+    <div class="grid-2" id="syllabus-grid" aria-live="polite">
+      <div class="card-glass skeleton" style="height:180px"></div>
+      <div class="card-glass skeleton" style="height:180px"></div>
+      <div class="card-glass skeleton" style="height:180px"></div>
+      <div class="card-glass skeleton" style="height:180px"></div>
+    </div>
   </main>
 
-  <!-- SYLLABUS UPLOAD MODAL -->
+  <!-- SYLLABUS UPLOAD MODAL - Enhanced -->
   <div id="syllabus-modal" class="modal-backdrop" style="display:none;" onclick="closeSyllabusModal(event)">
-    <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:560px; width:92%;">
       <h3>📗 Upload Syllabus</h3>
-      <div class="modal-form">
-        <input class="field" id="syll-name" placeholder="Subject Name">
-        <input class="field" id="syll-code" placeholder="Subject Code">
+      <p style="font-size:.8rem;color:var(--muted);margin:.25rem 0 .75rem">Add new subject syllabus with units. Only super students can upload.</p>
+      <div class="modal-form" style="display:flex;flex-direction:column;gap:.75rem">
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:.75rem">
+          <input class="field" id="syll-name" placeholder="Subject Name * e.g. Data Structures">
+          <input class="field" id="syll-code" placeholder="Code * e.g. CS301">
+        </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
           <select class="field" id="syll-branch"></select>
           <select class="field" id="syll-sem"></select>
         </div>
-        <textarea class="field" id="syll-units" placeholder='Units JSON: [{"n":1,"topic":"Arrays"}]' rows="3"></textarea>
-        <input class="field" id="syll-pdf" placeholder="PDF Link (Google Drive or direct URL)">
+        <textarea class="field" id="syll-desc" placeholder="Short description (optional)" rows="2"></textarea>
+        <div>
+          <label style="font-size:.75rem;color:var(--muted);margin-bottom:.25rem;display:block">Units JSON * - format: [{"n":1,"topic":"Arrays"}, ...]</label>
+          <textarea class="field" id="syll-units" placeholder='[{"n":1,"topic":"Arrays"}, {"n":2,"topic":"Linked List"}]' rows="4"></textarea>
+          <div style="display:flex;gap:.5rem;margin-top:.35rem">
+            <button type="button" class="btn btn-ghost btn-sm" onclick="formatUnitsHelper()" style="font-size:.7rem">✨ Format helper</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="validateUnitsJSON()" style="font-size:.7rem">🔍 Validate JSON</button>
+          </div>
+          <p id="units-validation-msg" style="font-size:.72rem;margin-top:.25rem;color:var(--muted)"></p>
+        </div>
+        <input class="field" id="syll-pdf" placeholder="PDF Link * (Google Drive or direct URL)">
+        <div style="display:flex;align-items:center;gap:.5rem;font-size:.75rem;color:var(--muted)">
+          <span>OR</span>
+          <input type="file" class="field" id="syll-file" accept="application/pdf" style="flex:1">
+        </div>
       </div>
-      <div class="modal-actions">
+      <div class="modal-actions" style="margin-top:1rem;display:flex;justify-content:flex-end;gap:.5rem">
         <button class="btn btn-ghost" onclick="closeSyllabusModal()">Cancel</button>
         <button class="btn btn-primary" onclick="submitSyllabusUpload()">🚀 Upload</button>
       </div>
     </div>
   </div>
-  </main>
-
 
   <div id="toast-wrap" class="toast-wrap"></div>
-
 
   <script src="{% static 'js/data.js' %}"></script>
   <script src="{% static 'js/swipe.js' %}"></script>
   <script src="{% static 'js/csrf.js' %}"></script>
   <script>
     // ---------- GLOBAL AUTH STATE ----------
-    window.isAuthenticated = {% if user.is_authenticated %}true {% else %}false{% endif %};
+    window.isAuthenticated = {% if user.is_authenticated %}true{% else %}false{% endif %};
+    let activeBranch = 'all';
+    let activeSemester = 'all';
+    let allSyllabi = [];
+    let filteredSyllabi = [];
+    let debounceTimer = null;
+
+    function getSafePdfUrl(value) {
+      if (!value) return '';
+      try {
+        const raw = String(value).trim();
+        const parsed = new URL(raw, window.location.origin);
+        if (!['http:', 'https:'].includes(parsed.protocol)) return '';
+        return parsed.href;
+      } catch (e) {
+        return '';
+      }
+    }
 
     function closeSyllabusModal(e) {
         if (!e || e.target === document.getElementById('syllabus-modal'))
@@ -126,6 +204,44 @@
       document.getElementById('syllabus-modal').style.display = 'grid';
     }
 
+    function formatUnitsHelper() {
+      const ta = document.getElementById('syll-units');
+      try {
+        const raw = ta.value.trim() || '[]';
+        let arr = JSON.parse(raw);
+        if (!Array.isArray(arr)) arr = [];
+        // normalize
+        arr = arr.map((u,i)=> ({ n: parseInt(u.n) || (i+1), topic: String(u.topic||'').trim() })).filter(u=>u.topic);
+        if (arr.length===0) {
+          arr = [{n:1,topic:"Unit 1 - Introduction"}, {n:2,topic:"Unit 2 - Basics"}];
+        }
+        ta.value = JSON.stringify(arr, null, 2);
+        document.getElementById('units-validation-msg').textContent = `✅ Formatted ${arr.length} units`;
+        document.getElementById('units-validation-msg').style.color = 'var(--accent-2, green)';
+      } catch(err) {
+        document.getElementById('units-validation-msg').textContent = '❌ Invalid JSON: ' + err.message;
+        document.getElementById('units-validation-msg').style.color = 'tomato';
+      }
+    }
+
+    function validateUnitsJSON() {
+      const ta = document.getElementById('syll-units');
+      const msg = document.getElementById('units-validation-msg');
+      try {
+        const arr = JSON.parse(ta.value.trim() || '[]');
+        if (!Array.isArray(arr)) throw new Error('Root must be array');
+        for (let i=0;i<arr.length;i++) {
+          if (typeof arr[i] !== 'object' || arr[i]===null) throw new Error(`Index ${i} not object`);
+          if (!('n' in arr[i]) || !('topic' in arr[i])) throw new Error(`Index ${i} missing n/topic`);
+        }
+        msg.textContent = `✅ Valid JSON - ${arr.length} units`;
+        msg.style.color = 'var(--accent-2, green)';
+      } catch(e) {
+        msg.textContent = '❌ ' + e.message;
+        msg.style.color = 'tomato';
+      }
+    }
+
     async function submitSyllabusUpload() {
         const name = document.getElementById('syll-name').value.trim();
         const code = document.getElementById('syll-code').value.trim();
@@ -133,9 +249,16 @@
         const sem = document.getElementById('syll-sem').value;
         const units = document.getElementById('syll-units').value.trim();
         const pdf = document.getElementById('syll-pdf').value.trim();
+        const desc = document.getElementById('syll-desc').value.trim();
+        const fileInput = document.getElementById('syll-file');
+        const file = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
 
         if (!name || !code || !branch || !sem) {
-            showToast('Please fill all required fields');
+            showToast('Please fill all required * fields');
+            return;
+        }
+        if (!pdf && !file) {
+            showToast('PDF link or file required');
             return;
         }
 
@@ -146,6 +269,8 @@
         fd.append('semester', sem);
         fd.append('units', units || '[]');
         fd.append('pdf_link', pdf);
+        fd.append('description', desc);
+        if (file) fd.append('pdf_file', file);
 
         try {
             const res = await fetch('/api/syllabus/upload/', {
@@ -164,21 +289,33 @@
             document.getElementById('syll-code').value = '';
             document.getElementById('syll-units').value = '';
             document.getElementById('syll-pdf').value = '';
+            document.getElementById('syll-desc').value = '';
+            if (fileInput) fileInput.value = '';
+            // refresh
+            await fetchSyllabi();
             renderSyllabus();
         } catch (err) {
             showToast('Error: ' + String(err));
         }
     }
 
-    let activeBranch = 'CSE';
-
     function renderBranchPills() {
       const container = document.getElementById('branch-pills');
-      container.innerHTML = BRANCHES.map(b => `
+      const allBranches = [{code:'all', name:'All Branches'}, ...BRANCHES];
+      container.innerHTML = allBranches.map(b => `
         <button class="pill ${b.code === activeBranch ? 'active' : ''}" onclick="setBranch('${b.code}')">
-          ${b.code} <span style="opacity:.7">${window.innerWidth > 768 ? '— '+b.name : ''}</span>
+          ${b.code} ${b.code!=='all' && window.innerWidth>768 ? `<span style="opacity:.7">— ${escapeHtml(b.name)}</span>` : ''}
         </button>
       `).join('');
+    }
+
+    function renderSemesterPills() {
+      const container = document.getElementById('semester-pills');
+      let html = `<button class="pill ${activeSemester==='all'?'active':''}" onclick="setSemester('all')">All Semesters</button>`;
+      for (let s=1;s<=8;s++) {
+        html += `<button class="pill ${String(activeSemester)===String(s)?'active':''}" onclick="setSemester('${s}')">Sem ${s}</button>`;
+      }
+      container.innerHTML = html;
     }
 
     function setBranch(code) {
@@ -187,51 +324,198 @@
       renderSyllabus();
     }
 
-    async function renderSyllabus() {
-        const response = await fetch(`/api/syllabus/?branch=${activeBranch}`);
+    function setSemester(sem) {
+      activeSemester = sem;
+      renderSemesterPills();
+      renderSyllabus();
+    }
+
+    function clearFilters() {
+      activeBranch = 'all';
+      activeSemester = 'all';
+      const search = document.getElementById('search-syllabus');
+      if (search) search.value = '';
+      const sort = document.getElementById('sort-syllabus');
+      if (sort) sort.value = 'newest';
+      renderBranchPills();
+      renderSemesterPills();
+      renderSyllabus();
+    }
+
+    function debouncedRender() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(()=> renderSyllabus(), 300);
+    }
+
+    async function fetchSyllabi() {
+      const grid = document.getElementById('syllabus-grid');
+      try {
+        // Build query with backend support
+        let url = '/api/syllabus/?';
+        const params = new URLSearchParams();
+        if (activeBranch && activeBranch !== 'all') params.set('branch', activeBranch);
+        if (activeSemester && activeSemester !== 'all') params.set('semester', activeSemester);
+        const searchVal = document.getElementById('search-syllabus')?.value?.trim();
+        if (searchVal) params.set('search', searchVal);
+        url += params.toString();
+
+        const response = await fetch(url, { headers: { Accept: 'application/json' }, cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
-        const list = data.syllabi;
+        allSyllabi = Array.isArray(data.syllabi) ? data.syllabi : [];
+      } catch (err) {
+        console.error('Failed to fetch syllabus', err);
+        // fallback to client-side data if API fails
+        const searchVal = (document.getElementById('search-syllabus')?.value || '').toLowerCase();
+        let fallback = allSyllabi.length ? allSyllabi : [];
+        if (fallback.length===0) {
+          // use local js constant if available
+          if (typeof syllabi !== 'undefined' && Array.isArray(syllabi)) {
+            fallback = syllabi.map(s=> ({...s, branch: s.branch, semester: s.semester, subject_name: s.subject_name || s.subject, subject_code: s.subject_code || s.code, pdf_url: '#', units: s.units||[], description: ''}));
+          }
+        }
+        allSyllabi = fallback;
+        if (grid && allSyllabi.length===0) {
+          // keep error
+          showToast('⚠️ Syllabus load failed, showing cache if any');
+        }
+      }
+    }
+
+    function applyClientFilters() {
+      let list = [...allSyllabi];
+      const searchRaw = (document.getElementById('search-syllabus')?.value || '').trim().toLowerCase();
+      const sortVal = document.getElementById('sort-syllabus')?.value || 'newest';
+
+      // Additional client-side filtering for robustness (if backend didn't filter)
+      if (activeBranch !== 'all') {
+        list = list.filter(s => (s.branch||'').toLowerCase() === activeBranch.toLowerCase());
+      }
+      if (activeSemester !== 'all') {
+        list = list.filter(s => String(s.semester) === String(activeSemester));
+      }
+      if (searchRaw) {
+        list = list.filter(s => {
+          const haystack = `${s.subject_name||''} ${s.subject_code||''} ${s.description||''} ${s.branch||''} ${(s.units||[]).map(u=>u.topic||'').join(' ')}`.toLowerCase();
+          return haystack.includes(searchRaw);
+        });
+      }
+
+      // sorting
+      if (sortVal === 'semester') {
+        list.sort((a,b)=> (a.semester - b.semester) || String(a.subject_name).localeCompare(String(b.subject_name)));
+      } else if (sortVal === 'name_asc') {
+        list.sort((a,b)=> String(a.subject_name).localeCompare(String(b.subject_name)));
+      } else if (sortVal === 'name_desc') {
+        list.sort((a,b)=> String(b.subject_name).localeCompare(String(a.subject_name)) * -1);
+      } else {
+        // newest
+        list.sort((a,b)=> (b.id||0) - (a.id||0));
+      }
+
+      filteredSyllabi = list;
+      return list;
+    }
+
+    async function renderSyllabus() {
         const container = document.getElementById('syllabus-grid');
+        const countEl = document.getElementById('syllabus-count');
+
+        if (!container) return;
+
+        // if not fetched yet or search changed, fetch again (backend handles search)
+        const searchVal = document.getElementById('search-syllabus')?.value?.trim() || '';
+        // For search, we re-fetch to leverage backend, otherwise use cache if filters are only branch/sem changed? Simpler: always fetch when branch/sem/search changes, debounced.
+        // But to avoid race, we check if allSyllabi empty or search/branch/sem changed recently - we will fetch.
+        // We'll fetch first, then apply client filters for sort.
+        if (allSyllabi.length===0 || searchVal || activeBranch!=='all' || activeSemester!=='all') {
+          // show skeleton while loading if currently empty
+          if (container.children.length===0 || container.querySelector('.skeleton')) {
+            container.innerHTML = `
+              <div class="card-glass skeleton" style="height:180px"></div>
+              <div class="card-glass skeleton" style="height:180px"></div>
+              <div class="card-glass skeleton" style="height:180px"></div>
+              <div class="card-glass skeleton" style="height:180px"></div>
+            `;
+          }
+          await fetchSyllabi();
+        }
+
+        const list = applyClientFilters();
+
+        if (countEl) {
+          countEl.textContent = `${list.length} syllabus found${activeBranch!=='all' ? ` for ${activeBranch}` : ''}${activeSemester!=='all' ? ` • Sem ${activeSemester}` : ''}`;
+        }
+
         if (list.length === 0) {
-            container.innerHTML = `<div class="card-glass empty">No syllabi yet for ${activeBranch}.</div>`;
+            container.innerHTML = `
+              <div class="card-glass empty-state" style="grid-column:1/-1">
+                <div style="font-size:2rem">📭</div>
+                <h3 style="margin:.5rem 0">No syllabi found</h3>
+                <p>Try changing branch, semester or search keywords.</p>
+                <button class="btn btn-ghost btn-sm" onclick="clearFilters()" style="margin-top:.75rem">Clear filters</button>
+              </div>`;
             return;
         }
-        container.innerHTML = list.map((s, i) => `
-            <article class="card-glass syllabus-card reveal" style="transition-delay:${i*60}ms">
+
+        container.innerHTML = list.map((s, i) => {
+          const safeName = escapeHtml(s.subject_name||'Untitled');
+          const safeCode = escapeHtml(s.subject_code||'');
+          const safeDesc = escapeHtml(s.description||'');
+          const safeBranch = escapeHtml(s.branch||'');
+          const unitsCount = Array.isArray(s.units) ? s.units.length : 0;
+          const pdfUrl = getSafePdfUrl(s.pdf_url) || s.pdf_url || '#';
+          const detailSlug = s.slug ? `/syllabus/${encodeURIComponent(s.slug)}/` : '#';
+          const created = s.created_at ? new Date(s.created_at).toLocaleDateString() : '';
+          return `
+            <article class="card-glass syllabus-card reveal" style="transition-delay:${i*50}ms">
                 <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.5rem">
-                    <div>
-                        <h3 style="font-size:1.05rem;font-weight:600">📗 ${escapeHtml(s.subject_name)}</h3>
-                        <p style="font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-top:.2rem">${s.subject_code}</p>
+                    <div style="flex:1;min-width:0">
+                        <h3 style="font-size:1.05rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${safeName}">📗 ${safeName}</h3>
+                        <p style="font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-top:.2rem">${safeCode}</p>
+                        ${safeDesc ? `<p class="description-text" title="${safeDesc}">${safeDesc}</p>` : ''}
                     </div>
-                    <div class="flex-wrap-gap" style="flex-shrink:0">
-                        <span class="badge badge-cyan">${s.branch}</span>
-                        <span class="badge badge-violet">Sem ${s.semester}</span>
+                    <div class="flex-wrap-gap" style="flex-shrink:0;display:flex;flex-wrap:wrap;gap:.25rem">
+                        <span class="badge badge-cyan">${safeBranch}</span>
+                        <span class="badge badge-violet">Sem ${s.semester||'-'}</span>
                     </div>
                 </div>
-                <p style="font-size:.85rem;color:var(--muted)">${(Array.isArray(s.units) ? s.units : []).length} units</p>
-                <button class="toggle-btn" onclick="toggleUnits('${s.id}', this)">▶ Show units</button>
+                <div style="display:flex;align-items:center;gap:.75rem;margin:.25rem 0;font-size:.72rem;color:var(--muted)">
+                  <span>${unitsCount} units</span>
+                  ${s.uploaded_by ? `<span>• by ${escapeHtml(s.uploaded_by)}</span>` : ''}
+                  ${created ? `<span>• ${escapeHtml(created)}</span>` : ''}
+                </div>
+                <button class="toggle-btn" onclick="toggleUnits('${s.id}', this)">▶ Show units (${unitsCount})</button>
                 <ul class="units-list" id="units-${s.id}">
-                    ${(Array.isArray(s.units) ? s.units : []).map(u => `<li class="unit-item"><span class="badge badge-matrix" style="flex-shrink:0">U${u.n}</span><span>${escapeHtml(u.topic)}</span></li>`).join('')}
+                    ${(Array.isArray(s.units) ? s.units : []).map(u => `<li class="unit-item"><span class="badge badge-matrix" style="flex-shrink:0">U${escapeHtml(String(u.n||''))}</span><span>${escapeHtml(u.topic||'')}</span></li>`).join('')}
+                    ${unitsCount===0 ? `<li class="unit-item" style="opacity:.6">No units detailed</li>` : ''}
                 </ul>
-                <div style="display:flex;gap:.5rem;margin-top:1rem">
-                    <a href="${s.pdf_url}" target="_blank" class="btn btn-ghost btn-sm">👁️ View Syllabus</a>
-                    <a href="${s.pdf_url}" download class="btn btn-primary btn-sm">⬇ Download PDF</a>
+                <div class="card-footer">
+                    <a href="${pdfUrl}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">👁️ View</a>
+                    <a href="${pdfUrl}" download class="btn btn-primary btn-sm">⬇ Download</a>
+                    ${s.slug ? `<a href="${detailSlug}" class="btn btn-ghost btn-sm">🔗 Detail</a>` : ''}
                 </div>
             </article>
-        `).join('');
-        setTimeout(initReveal, 50);
+          `;
+        }).join('');
+        setTimeout(()=>{ if (typeof initReveal==='function') initReveal(); }, 50);
     }
 
     function toggleUnits(id, btn) {
       const list = document.getElementById('units-'+id);
+      if (!list) return;
       const isOpen = list.classList.contains('open');
       list.classList.toggle('open');
-      btn.textContent = isOpen ? '▶ Show units' : '▼ Hide units';
+      btn.textContent = isOpen ? `▶ Show units (${list.children.length})` : `▼ Hide units (${list.children.length})`;
     }
 
-    renderBranchPills();
-    renderSyllabus();
-    initCommon();
+    document.addEventListener('DOMContentLoaded', async () => {
+      renderBranchPills();
+      renderSemesterPills();
+      await fetchSyllabi();
+      renderSyllabus();
+      initCommon();
+    });
   </script>
 </body>
 </html>

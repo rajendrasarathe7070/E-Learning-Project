@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ syllabus.subject_name }} - Syllabus | E-Learn</title>
+  <link id="theme-stylesheet" rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    .syllabus-detail { max-width: 800px; margin: 0 auto; }
+    .unit-item-detail { padding: .75rem 1rem; border-radius: .5rem; background: rgba(108,99,255,0.04); border: 1px solid rgba(108,99,255,0.1); display:flex; gap:.75rem; margin-bottom:.5rem; }
+  </style>
+</head>
+<body>
+  <div id="particles" class="particles"></div>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="{% url 'index' %}" class="navbar-brand">
+        <div class="brand-icon">📚</div>
+        <span class="brand-name">E-learn</span>
+      </a>
+      <div class="nav-links">
+        <a href="{% url 'index' %}" class="nav-link">🏠 Home</a>
+        <a href="{% url 'syllabus' %}" class="nav-link active">📗 Syllabus</a>
+        <a href="{% url 'notes' %}" class="nav-link">📝 Notes</a>
+        <a href="{% url 'books' %}" class="nav-link">📖 Books</a>
+        <a href="{% url 'pyq' %}" class="nav-link">📄 PYQ</a>
+      </div>
+    </div>
+  </nav>
+  <main class="container page-content">
+    <div class="syllabus-detail">
+      <a href="{% url 'syllabus' %}" class="btn btn-ghost btn-sm" style="margin-bottom:1rem">← Back to Syllabus</a>
+      <article class="card-glass" style="padding:1.5rem">
+        <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+          <div>
+            <h1 style="font-size:1.5rem;font-weight:700">📗 {{ syllabus.subject_name }}</h1>
+            <p style="font-family:monospace;color:var(--muted);margin-top:.25rem">{{ syllabus.subject_code }} • {{ syllabus.branch.code }} • Sem {{ syllabus.semester }}</p>
+            {% if syllabus.description %}
+            <p style="margin-top:.75rem;color:var(--muted)">{{ syllabus.description }}</p>
+            {% endif %}
+            {% if syllabus.uploaded_by %}
+            <p style="font-size:.75rem;color:var(--muted);margin-top:.5rem">Uploaded by {{ syllabus.uploaded_by.username }} on {{ syllabus.created_at|date:"M d, Y" }}</p>
+            {% endif %}
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.5rem">
+            {% if syllabus.pdf_link %}
+            <a href="{{ syllabus.pdf_link }}" target="_blank" class="btn btn-primary btn-sm">📄 View PDF</a>
+            {% endif %}
+            {% if syllabus.pdf_file %}
+            <a href="{{ syllabus.pdf_file.url }}" target="_blank" class="btn btn-ghost btn-sm">⬇ Download File</a>
+            {% endif %}
+          </div>
+        </div>
+        <hr style="margin:1.25rem 0;opacity:.2">
+        <h3 style="margin-bottom:.75rem">{{ syllabus.units|length }} Units</h3>
+        <div>
+          {% for unit in syllabus.units %}
+          <div class="unit-item-detail">
+            <span class="badge badge-matrix">U{{ unit.n }}</span>
+            <span>{{ unit.topic }}</span>
+          </div>
+          {% empty %}
+          <p style="color:var(--muted)">No units available.</p>
+          {% endfor %}
+        </div>
+      </article>
+    </div>
+  </main>
+  <script src="{% static 'js/data.js' %}"></script>
+  <script src="{% static 'js/swipe.js' %}"></script>
+  <script>
+    if (typeof initCommon === 'function') initCommon();
+  </script>
+</body>
+</html>

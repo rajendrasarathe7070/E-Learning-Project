@@ -27,7 +27,7 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.sitemaps.views import sitemap
-from .sitemaps import StaticSitemap, DynamicFilterSitemap, DetailSitemap
+from .sitemaps import StaticSitemap, DynamicFilterSitemap, DetailSitemap, SyllabusSitemap
 from core import views
 from minor.sitemaps import PYQSitemap 
 from core.views import pyq_page
@@ -37,6 +37,7 @@ sitemaps = {
     'dynamic_filters': DynamicFilterSitemap,
     'details': DetailSitemap,
     'pyqs': PYQSitemap,
+    'syllabus': SyllabusSitemap,
 }
 
 
@@ -90,6 +91,7 @@ urlpatterns = [
     path('notes/<slug:slug>/', views.note_detail, name='note_detail'),
         # PYQ Detail Page के लिए यह पाथ जोड़ें
     path('pyq/<slug:slug>/', views.pyq_detail, name='pyq_detail'),
+    path('syllabus/<slug:slug>/', views.syllabus_detail, name='syllabus_detail'),
 
 ]
 
