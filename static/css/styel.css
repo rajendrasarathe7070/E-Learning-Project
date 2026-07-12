@@ -237,9 +237,9 @@ body {
 /* ===== BADGES ===== */
 .badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: .7rem; font-family: var(--font-mono); }
 #search-pyq {
-  background: var(--bg-card); /* सफ़ेद बैकग्राउंड जो आपकी थीम से मैच करे */
-  border: 1px solid rgba(108, 99, 255, 0.25); /* हल्का पर्पल बॉर्डर */
-  color: var(--foreground);
+  background: rgba(149, 83, 180, 0.844)); /* सफ़ेद बैकग्राउंड जो आपकी थीम से मैच करे */
+  border: 3px solid rgba(5, 5, 5, 0.837)
+  color: black;
   padding: 0.65rem 1.15rem;
   border-radius: 0.75rem; /* बटन की तरह कर्व्ड कॉर्नर्स */
   font-size: 0.95rem;
