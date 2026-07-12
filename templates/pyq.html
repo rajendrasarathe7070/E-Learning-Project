@@ -11,177 +11,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Diploma Previous Year Questions Paper</title>
+  <title>Diploma Previous Year Questions pepar </title>
   <meta name="google-site-verification" content="60IgBTJrYhG7P3B2JvdgjlBdoom9xrAfi12Q3FfCUTA" />
-  <link id="theme-stylesheet" rel="stylesheet" href="{% static 'css/style.css' %}">
-  
-  <!-- इस पेज के लेआउट और मॉडल्स के लिए आवश्यक अतिरिक्त CSS -->
-  <style>
-    /* ===== THEME VARIABLE OVERRIDES ===== */
-    body.dark-theme {
-      --bg-primary: #0b0b14;
-      --bg-secondary: #131324;
-      --bg-card: #16162a;
-      --foreground: #f1f1f7;
-      --muted: #9595b7;
-      --border-glow: rgba(108,99,255,0.4);
-      --glass: rgba(16,16,32,0.6);
-    }
-
-    /* ===== GRID & RESPONSIVE LAYOUT ===== */
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    .gradient-text {
-      background: var(--gradient-hero);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      display: inline-block;
-    }
-    .page-header {
-      margin-bottom: 2rem;
-    }
-
-    /* ===== INPUT FIELDS ===== */
-    .field {
-      padding: 0.75rem 1rem;
-      border-radius: 0.75rem;
-      border: 1px solid rgba(108,99,255,0.2);
-      background: var(--bg-card);
-      color: var(--foreground);
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .field:focus {
-      border-color: var(--accent-1);
-      box-shadow: 0 0 0 3px var(--border-glow);
-    }
-
-    /* ===== PILLS FOR YEARS ===== */
-    .pill {
-      padding: 0.5rem 1rem;
-      border-radius: 2rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      background: var(--bg-secondary);
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.2s;
-      border: 1px solid transparent;
-    }
-    .pill:hover {
-      color: var(--foreground);
-      background: rgba(108,99,255,0.1);
-    }
-    .pill.active {
-      background: var(--gradient-hero);
-      color: white;
-      box-shadow: 0 4px 12px rgba(108,99,255,0.25);
-    }
-
-    /* ===== CARD DETAILS INNER ===== */
-    .pyq-card-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(108,99,255,0.1);
-    }
-
-    /* ===== MODAL DIALOG ===== */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      display: grid;
-      place-items: center;
-      padding: 1rem;
-    }
-    .modal {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glow);
-      border-radius: 1.25rem;
-      padding: 2rem;
-      width: 100%;
-      max-width: 500px;
-      box-shadow: var(--shadow-glow);
-    }
-    .modal h3 {
-      margin-bottom: 1.25rem;
-      font-size: 1.4rem;
-    }
-    .modal-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.75rem;
-    }
-
-    /* ===== TOAST MESSAGES ===== */
-    .toast-wrap {
-      position: fixed;
-      bottom: 5rem;
-      right: 1.5rem;
-      z-index: 2000;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .toast {
-      background: var(--foreground);
-      color: var(--bg-primary);
-      padding: 0.75rem 1.25rem;
-      border-radius: 0.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      font-weight: 500;
-      font-size: 0.9rem;
-      animation: toastIn 0.3s ease-out forwards;
-    }
-    @keyframes toastIn {
-      from { transform: translateY(10px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    /* ===== BADGES COMPLETE ===== */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 0.25rem 0.6rem;
-      border-radius: 0.5rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-    .badge-f { background: rgba(108,99,255,0.15); color: var(--accent-1); }
-    .badge-mid { background: rgba(0,153,204,0.15); color: var(--accent-2); }
-    .badge-s { background: rgba(232,74,122,0.15); color: var(--accent-3); }
-
-    /* ===== MOBILE BOTTOM NAV LABELS ===== */
-    .mobile-nav a {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-decoration: none;
-      gap: 2px;
-    }
-    .mobile-nav a span { font-weight: 500; }
-  </style>
+  <link id="theme-stylesheet" rel="stylesheet" href="{% static 'css/styel.css' %}">
+  <style></style>
 </head>
 <body>
   <div id="particles" class="particles"></div>
@@ -199,19 +32,19 @@
         <a href="{% url 'notes' %}" class="nav-link">📝 Notes</a>
         <a href="{% url 'syllabus' %}" class="nav-link">📗 Syllabus</a>
         <a href="{% url 'books' %}" class="nav-link">📖 Books</a>
-        <a href="{% url 'pyq' %}" class="nav-link active">📄 PYQ</a>
+        <a href="{% url 'pyq' %}" class="nav-link">📄 PYQ</a>
         <a href="{% url 'doubts' %}" class="nav-link">❓ Doubts</a>
         <a href="{% url 'profile' %}" class="nav-link">👤 Profile</a>
       </div>
-      
-      <a href="{% url 'doubts' %}" class="nav-mobile-icon btn btn-ghost btn-sm">❓</a>
+       <a href="{% url 'doubts' %}" class="nav-mobile-icon btn btn-ghost btn-sm">❓</a>
       {% if user.is_authenticated %}
-        <a href="{% url 'profile' %}" class="nav-mobile-icon btn btn-ghost btn-sm">👤</a>
-      {% else %}
-        <a href="{% url 'login' %}" class="nav-mobile-icon btn btn-ghost btn-sm">🔐</a>
-      {% endif %}
+      <a href="{% url 'profile' %}" class="nav-mobile-icon btn btn-ghost btn-sm">👤</a>
+      {%else %}
+      <a href="{% url 'login' %}" class="nav-mobile-icon btn btn-ghost btn-sm">🔐</a>
+    {% endif %}
 
       <button id="theme-toggle-btn" class="btn btn-ghost btn-sm" onclick="toggleTheme()" style="font-size:1.2rem; border:none; background:none; cursor:pointer; padding:0.5rem;">☀️</button>
+
     </div>
   </nav>
 
@@ -220,7 +53,7 @@
     <a href="{% url 'notes' %}">📝<span>Notes</span></a>
     <a href="{% url 'syllabus' %}">📗<span>Syllabus</span></a>
     <a href="{% url 'books' %}">📖<span>Books</span></a>
-    <a href="{% url 'pyq' %}" class="active">📄<span>PYQ</span></a>
+    <a href="{% url 'pyq' %}">📄<span>PYQ</span></a>
   </nav>
 
   <main class="container page-content page-enter">
@@ -228,25 +61,30 @@
       <h1 class="gradient-text">📄 Previous Year Papers</h1>
       <p>Filter by year, branch and exam type. Practice smarter.</p>
       {% if request.user.is_authenticated and request.user.role == 'super_student' %}
-        <div style="margin:1rem 0;display:flex;justify-content:flex-end">
-          <button id="pyq-admin-toggle" type="button" class="btn btn-primary" onclick="openPyqModal()">
-            ➕ Upload PYQ
-          </button>
-        </div>
-      {% endif %}
+    <div style="margin:1rem 0;display:flex;justify-content:flex-end">
+      <button id="pyq-admin-toggle" type="button" class="btn btn-primary" onclick="openPyqModal()">
+        ➕ Upload PYQ
+      </button>
+    </div>
+  {% endif %}
     </div>
 
-    <div class="card-glass" style="padding:1rem;margin-bottom:1.5rem;display:flex;flex-direction:column;gap:.75rem">
+    <div class="card-glass reveal" style="padding:1rem;margin-bottom:1.5rem;display:flex;flex-direction:column;gap:.75rem">
       <div style="display:flex;flex-wrap:wrap;gap:.4rem" id="year-pills"></div>
       <div style="display:flex;flex-wrap:wrap;gap:.75rem">
+        
+        <!-- 🔍 यहाँ पुराना ब्रांच सेलेक्ट बॉक्स हटाकर ऑटो-सर्च इनपुट बार लगाया गया है -->
         <input type="text" class="field" id="search-pyq" placeholder="🔍 विषय या कोड सर्च करें..." style="width:auto;flex:2;min-width:200px" oninput="renderPYQ()">
+
         <select class="field" id="filter-type" style="width:auto;flex:1;min-width:150px" onchange="renderPYQ()">
           <option value="all">All types</option>
           <option value="F">F-series</option>
           <option value="mid">mid-Sem</option>
           <option value="S">S-series</option>
         </select>
+        
       </div>
+
     </div>
 
     <div class="grid-3" id="pyq-grid"></div>
@@ -280,104 +118,15 @@
     </div>
   </div>
 
-  <!-- Scripts External Links (Fallback local files included) -->
   <script src="{% static 'js/data.js' %}"></script>
   <script src="{% static 'js/swipe.js' %}"></script>
   <script src="{% static 'js/csrf.js' %}"></script>
-  
-  <script>
-    // ===== CONFIG & STATE MANAGEMENT =====
-    window.isAuthenticated = {% if user.is_authenticated %}true{% else %}false{% endif %};
-    let currentSelectedYear = 'all';
+<script>
+  window.isAuthenticated = {% if user.is_authenticated %}true {% else %}false{% endif %};
 
-    // यदि external data.js फ़ाइल लोड न हो, तो यह फ़ालबैक डेटा काम करेगा
-    window.pyqData = window.pyqData || [
-      { id: 1, subject: "Data Structures", branch: "CSE", semester: "4", year: "2023", exam_type: "F", pdf_link: "#" },
-      { id: 2, subject: "Digital Electronics", branch: "ECE", semester: "3", year: "2022", exam_type: "mid", pdf_link: "#" },
-      { id: 3, subject: "Strength of Materials", branch: "ME", semester: "4", year: "2023", exam_type: "S", pdf_link: "#" }
-    ];
-
-    const branchList = ['CSE', 'Civil', 'Mechanical', 'Electrical', 'ECE'];
-
-    // ===== UI FUNCTIONS & TOAST =====
-    function showToast(message) {
-      const wrap = document.getElementById('toast-wrap');
-      if (!wrap) return;
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.innerText = message;
-      wrap.appendChild(toast);
-      setTimeout(() => { toast.remove(); }, 3000);
-    }
-
-    function branchOptions(selectedBranch, includeAll = false) {
-      let html = includeAll ? '<option value="all">All Branches</option>' : '';
-      branchList.forEach(b => {
-        html += `<option value="${b}" ${b === selectedBranch ? 'selected' : ''}>${b}</option>`;
-      });
-      return html;
-    }
-
-    // ===== THEME CONTROLLER =====
-    function toggleTheme() {
-      const body = document.body;
-      const btn = document.getElementById('theme-toggle-btn');
-      if (!body || !btn) return;
-      
-      if (body.classList.contains('dark-theme')) {
-        body.classList.remove('dark-theme');
-        btn.innerText = '☀️';
-        localStorage.setItem('theme', 'light');
-      } else {
-        body.classList.add('dark-theme');
-        btn.innerText = '🌙';
-        localStorage.setItem('theme', 'dark');
-      }
-    }
-
-    // लोकलस्टोरेज से पुरानी सेव्ड थीम लोड करना
-    if (localStorage.getItem('theme') === 'dark') {
-      document.body.classList.add('dark-theme');
-      const btn = document.getElementById('theme-toggle-btn');
-      if (btn) btn.innerText = '🌙';
-    }
-
-    // ===== SCROLL PROGRESS BAR =====
-    window.addEventListener('scroll', () => {
-      const progressBar = document.getElementById('scroll-progress');
-      if (!progressBar) return;
-      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-      progressBar.style.width = scrolled + "%";
-    });
-
-    // ===== BACKGROUND PARTICLES GENERATOR =====
-    function initParticles() {
-      const pContainer = document.getElementById('particles');
-      if (!pContainer) return;
-      for (let i = 0; i < 15; i++) {
-        const dot = document.createElement('span');
-        const size = Math.random() * 6 + 4;
-        dot.style.width = `${size}px`;
-        dot.style.height = `${size}px`;
-        dot.style.left = `${Math.random() * 100}%`;
-        dot.style.top = `${Math.random() * 100}%`;
-        dot.style.background = i % 2 === 0 ? 'var(--accent-1)' : 'var(--accent-2)';
-        dot.style.opacity = '0.15';
-        dot.style.setProperty('--dur', `${Math.random() * 10 + 10}s`);
-        dot.style.setProperty('--delay', `${Math.random() * -5}s`);
-        pContainer.appendChild(dot);
-      }
-    }
-
-    // ===== MODAL LOGIC =====
     function closePyqModal(e) {
-      const modal = document.getElementById('pyq-modal');
-      if (!modal) return;
-      if (!e || e.target === modal) {
-        modal.style.display = 'none';
-      }
+        if (!e || e.target === document.getElementById('pyq-modal'))
+            document.getElementById('pyq-modal').style.display = 'none';
     }
 
     function openPyqModal() {
@@ -385,172 +134,103 @@
         showToast('🔒 Please login to upload');
         return;
       }
-      const branchSelect = document.getElementById('pyq-branch');
-      const semSelect = document.getElementById('pyq-sem');
-      const modal = document.getElementById('pyq-modal');
-      
-      if (branchSelect) branchSelect.innerHTML = branchOptions('CSE', false);
-      
-      if (semSelect) {
-        let semHtml = '';
-        for (let s = 1; s <= 8; s++) {
-          semHtml += `<option value="${s}" ${s === 4 ? 'selected' : ''}>Sem ${s}</option>`;
-        }
-        semSelect.innerHTML = semHtml;
-      }
-      
-      if (modal) modal.style.display = 'grid';
-    }
-
-    // ===== AJAX/FETCH UPLOAD FUNCTION =====
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
-      }
-      return cookieValue;
+      document.getElementById('pyq-branch').innerHTML = branchOptions('CSE', false);
+      let semHtml='';
+      for (let s=1;s<=8;s++) semHtml += `<option value="${s}" ${s===4?'selected':''}>Sem ${s}</option>`;
+      document.getElementById('pyq-sem').innerHTML = semHtml;
+      document.getElementById('pyq-modal').style.display = 'grid';
     }
 
     async function submitPyqUpload() {
-      const subject = document.getElementById('pyq-subject').value.trim();
-      const branch = document.getElementById('pyq-branch').value;
-      const sem = document.getElementById('pyq-sem').value;
-      const year = document.getElementById('pyq-year').value;
-      const type = document.getElementById('pyq-type').value;
-      const pdf = document.getElementById('pyq-pdf').value.trim();
+        const subject = document.getElementById('pyq-subject').value.trim();
+        const branch = document.getElementById('pyq-branch').value;
+        const sem = document.getElementById('pyq-sem').value;
+        const year = document.getElementById('pyq-year').value;
+        const type = document.getElementById('pyq-type').value;
+        const pdf = document.getElementById('pyq-pdf').value.trim();
 
-      if (!subject || !branch || !sem || !year || !type || !pdf) {
-        showToast('❌ Please fill all required fields');
-        return;
-      }
-
-      const fd = new FormData();
-      fd.append('subject', subject);
-      fd.append('branch', branch);
-      fd.append('semester', sem);
-      fd.append('year', year);
-      fd.append('exam_type', type);
-      fd.append('pdf_link', pdf);
-
-      try {
-        const token = typeof getCookie === 'function' ? getCookie('csrftoken') : '';
-        const res = await fetch('/api/pyqs/upload/', {
-          method: 'POST',
-          headers: {'X-CSRFToken': token},
-          body: fd
-        });
-        const data = await res.json();
-        if (!res.ok) {
-          showToast('Error: ' + (data.error || 'Upload failed'));
-          return;
-        }
-        showToast('✅ PYQ uploaded!');
-        
-        const modal = document.getElementById('pyq-modal');
-        if (modal) modal.style.display = 'none';
-
-        // फॉर्म रीसेट
-        document.getElementById('pyq-subject').value = '';
-        document.getElementById('pyq-year').value = '';
-        document.getElementById('pyq-pdf').value = '';
-
-        // लोकल ऐरे अपडेट
-        if (window.pyqData) {
-          window.pyqData.unshift({
-            id: Date.now(), subject, branch, semester: sem, year, exam_type: type, pdf_link: pdf
-          });
+        if (!subject || !branch || !sem || !year || !type || !pdf) {
+            showToast('Please fill all required fields');
+            return;
         }
 
-        initYearPills();
-        renderPYQ();
-      } catch (err) {
-        showToast('Error: ' + String(err));
-      }
+        const fd = new FormData();
+        fd.append('subject', subject);
+        fd.append('branch', branch);
+        fd.append('semester', sem);
+        fd.append('year', year);
+        fd.append('exam_type', type);
+        fd.append('pdf_link', pdf);
+
+        try {
+            const res = await fetch('/api/pyqs/upload/', {
+                method: 'POST',
+                headers: {'X-CSRFToken': getCookie('csrftoken')},
+                body: fd
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                showToast('Error: ' + (data.error || 'Upload failed'));
+                return;
+            }
+            showToast('✅ PYQ uploaded!');
+            document.getElementById('pyq-modal').style.display = 'none';
+            document.getElementById('pyq-subject').value = '';
+            document.getElementById('pyq-year').value = '';
+            document.getElementById('pyq-pdf').value = '';
+            renderPYQ();
+        } catch (err) {
+            showToast('Error: ' + String(err));
+        }
     }
 
-    // ===== AUTOMATIC FILTER & PYQ RENDER ENGINE =====
-    function initYearPills() {
-      const pillsContainer = document.getElementById('year-pills');
-      if (!pillsContainer) return;
-
-      const years = new Set(['all']);
-      window.pyqData.forEach(item => { if (item.year) years.add(String(item.year)); });
-
-      const sortedYears = Array.from(years).sort((a, b) => {
-        if (a === 'all') return -1;
-        if (b === 'all') return 1;
-        return b - a;
-      });
-
-      let html = '';
-      sortedYears.forEach(y => {
-        const label = y === 'all' ? 'All Years' : y;
-        const activeClass = y === currentSelectedYear ? 'active' : '';
-        html += `<span class="pill ${activeClass}" onclick="filterByYear('${y}')">${label}</span>`;
-      });
-      pillsContainer.innerHTML = html;
-    }
-
-    function filterByYear(year) {
-      currentSelectedYear = year;
-      initYearPills();
-      renderPYQ();
-    }
-
+    //  अपडेटेड ऑटो-सर्च फ़ंक्शन
     async function renderPYQ() {
-      const searchInput = document.getElementById('search-pyq');
-      const typeSelect = document.getElementById('filter-type');
-      const grid = document.getElementById('pyq-grid');
+        // 'filter-branch' हट चुका है, इसलिए अब हम नए 'search-pyq' इनपुट की वैल्यू पढ़ेंगे
+        const searchQuery = document.getElementById('search-pyq').value.toLowerCase().trim();
+        const type = document.getElementById('filter-type').value;
+        
+        // API कॉल में ब्रांच भेजने की ज़रूरत नहीं है क्योंकि हम फ्रंटएंड पर सब कुछ सर्च कर रहे हैं
+        const params = new URLSearchParams({exam_type: type, year: activeYear});
+        const response = await fetch(`/api/pyqs/?${params}`);
 
-      if (!grid) return;
-      
-      const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
-      const typeFilter = typeSelect ? typeSelect.value : 'all';
-      
-      grid.innerHTML = '';
+        const data = await response.json();
+        let filtered = data.pyqs;
+        
+        // ✨ लाइव ऑटो-सर्च फ़िल्टर लॉजिक
+        if (searchQuery) {
+            filtered = filtered.filter(p => 
+                (p.subject && p.subject.toLowerCase().includes(searchQuery)) ||
+                (p.branch && p.branch.toLowerCase().includes(searchQuery))
+            );
+        }
 
-      // फ़िल्टरिंग लॉजिक
-      const filteredData = window.pyqData.filter(item => {
-        const matchesSearch = item.subject.toLowerCase().includes(searchQuery) ||
-                              item.branch.toLowerCase().includes(searchQuery) ||
-                              (item.semester && `sem ${item.semester}`.includes(searchQuery));
+        const container = document.getElementById('pyq-grid');
+        if (filtered.length === 0) {
+            container.innerHTML = '<div class="card-glass empty">No papers match.</div>';
+            return;
+        }
+        
+        container.innerHTML = filtered.map((p, i) => `
+            <article class="card-glass pyq-card reveal" style="transition-delay:${i*40}ms" onclick="window.open('${p.pdf_url}', '_blank')">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
+                    <span class="year">${p.year}</span>
+                    <span class="badge badge-pink">${examLabel(p.exam_type)}</span>
+                </div>
+                <h3 style="font-size:1.05rem;font-weight:600">📄 ${escapeHtml(p.subject)}</h3>
+                <div class="flex-wrap-gap" style="margin-top:.5rem">
+                    <span class="badge badge-cyan">${p.branch}</span>
+                    <span class="badge badge-violet">Sem ${p.semester}</span>
+                </div>
+            </article>
+        `).join('');
+        setTimeout(initReveal, 50);
+    }
 
-        const matchesType = typeFilter === 'all' || item.exam_type === typeFilter;
-        const matchesYear = currentSelectedYear === 'all' || String(item.year) === String(currentSelectedYear);
-
-        return matchesSearch && matchesType && matchesYear;
-      });
-
-      if (filteredData.length === 0) {
-        grid.innerHTML = `<div class="card-glass" style="grid-column: 1/-1; padding: 2rem; text-align: center; color: var(--muted);">🔍 कोई प्रश्न पत्र नहीं मिला!</div>`;
-        return;
-      }
-
-      // HTML रिस्पॉन्सिव कार्ड जनरेट करना
-      filteredData.forEach(item => {
-        let typeBadgeClass = 'badge-f';
-        let typeLabel = 'F-Series';
-        if (item.exam_type === 'mid') { typeBadgeClass = 'badge-mid'; typeLabel = 'Mid-Sem'; }
-        if (item.exam_type === 'S') { typeBadgeClass = 'badge-s'; typeLabel = 'S-Series'; }
-
-        const card = document.createElement('div');
-        card.className = 'card-glass';
-        card.style.padding = '1.25rem';
-        card.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.5rem;">
-            ${item.subject}
-            ${typeLabel}
-            ${item.branch}Sem ${item.semester}Year ${item.year}📥 Download PDF`;grid.appendChild(card);});}
-            // डोम (DOM) लोड होने पर फंक्शन्स को ट्रिगर करना
-            document.addEventListener('DOMContentLoaded', () => {initParticles();initYearPills();renderPYQ();});
-
-</script>
+    // ध्यान दें: document.getElementById('filter-branch').innerHTML वाली लाइन को हटा दिया गया है
+    renderYearPills();
+    renderPYQ();
+    initCommon();
+  </script>
 </body>
 </html>
